@@ -2,31 +2,28 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FitBot-9000 Debugger — IB SEHS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>FitBot-9000 · Socratic debugger</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;1,400&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #edf2f7;
+      --bg: #f4f7fc;
       --surface: #ffffff;
-      --navy: #1a2744;
+      --navy: #1e2b4f;
       --blue: #2563eb;
       --blue-light: #eff6ff;
-      --red: #dc2626;
-      --red-light: #fff5f5;
-      --red-border: #fecaca;
-      --green: #059669;
-      --green-light: #ecfdf5;
-      --green-border: #6ee7b7;
-      --amber: #d97706;
+      --amber: #b45309;
       --amber-light: #fffbeb;
       --amber-border: #fde68a;
       --text: #111827;
-      --muted: #6b7280;
-      --border: #e5e7eb;
+      --muted: #5b6c84;
+      --border: #e2e8f0;
+      --curious-teal: #0f766e;
+      --teal-light: #f0fdfa;
+      --teal-border: #99f6e4;
     }
 
     body {
@@ -34,207 +31,175 @@
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
-      line-height: 1.65;
+      line-height: 1.6;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 1.5rem;
     }
 
-    .app { max-width: 760px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+    .app { 
+      max-width: 780px; 
+      width: 100%; 
+      margin: 0 auto; 
+      padding: 1.8rem 1.2rem 3rem; 
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
 
-    /* ── HEADER ── */
     .site-header {
-      display: none; align-items: center; justify-content: space-between;
-      margin-bottom: 1.75rem; padding-bottom: 1.25rem; border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.25rem;
+      flex-wrap: wrap;
+      gap: 1rem;
     }
-    .site-header.visible { display: flex; }
     .logo { display: flex; align-items: center; gap: 0.7rem; }
     .logo-icon {
-      width: 38px; height: 38px; background: var(--navy); border-radius: 9px;
+      width: 40px; height: 40px; background: var(--navy); border-radius: 12px;
       display: flex; align-items: center; justify-content: center;
-      font-family: 'Fira Code', monospace; font-size: 0.75rem; color: #fff; font-weight: 500; flex-shrink: 0;
+      font-family: 'Fira Code', monospace; font-size: 0.8rem; color: #ffffff; font-weight: 500;
     }
-    .logo-name { font-family: 'Syne', sans-serif; font-size: 1.0rem; font-weight: 700; color: var(--navy); line-height: 1.1; }
-    .logo-sub  { font-size: 0.68rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
-    .progress-wrap { display: flex; align-items: center; gap: 0.4rem; }
-    .pdot { width: 11px; height: 11px; border-radius: 50%; background: var(--border); transition: background 0.3s, transform 0.3s; }
-    .pdot.active { background: var(--blue); transform: scale(1.2); }
-    .pdot.done   { background: var(--green); }
+    .logo-name { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 700; color: var(--navy); line-height: 1.1; }
+    .logo-sub  { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .progress-wrap { display: flex; align-items: center; gap: 0.5rem; }
+    .pdot { width: 11px; height: 11px; border-radius: 50%; background: var(--border); transition: all 0.25s; }
+    .pdot.active { background: var(--blue); transform: scale(1.25); box-shadow: 0 0 0 3px rgba(37,99,235,0.2); }
+    .pdot.done   { background: var(--curious-teal); }
 
-    /* ── SCREENS ── */
     .screen { display: none; }
     .screen.on { display: block; animation: fadeUp 0.35s ease; }
-    @keyframes fadeUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
 
-    /* ── CARD ── */
     .card {
-      background: var(--surface); border-radius: 16px; padding: 2.75rem;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.07), 0 12px 32px rgba(0,0,0,0.05);
+      background: var(--surface); border-radius: 22px; padding: 2.5rem 2.2rem;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.04), 0 2px 6px rgba(0,0,0,0.02);
     }
     .badge {
       display: inline-flex; align-items: center; gap: 0.35rem;
       background: var(--amber-light); color: var(--amber); border: 1px solid var(--amber-border);
-      padding: 0.28rem 0.75rem; border-radius: 100px;
-      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
-      margin-bottom: 1.4rem;
+      padding: 0.25rem 0.9rem; border-radius: 100px;
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
+      margin-bottom: 1.5rem;
     }
     .setup-title {
       font-family: 'Syne', sans-serif; font-size: 2.4rem; font-weight: 800;
-      color: var(--navy); line-height: 1.05; margin-bottom: 0.7rem;
+      color: var(--navy); line-height: 1.1; margin-bottom: 0.8rem;
     }
-    .setup-title em { color: var(--red); font-style: normal; }
-    .setup-desc { color: var(--muted); font-size: 1.0rem; margin-bottom: 1.75rem; }
+    .setup-title em { color: var(--curious-teal); font-style: normal; }
+    .setup-desc { color: var(--muted); font-size: 1.05rem; margin-bottom: 2rem; max-width: 90%; }
     .mission-box {
-      background: var(--bg); border-left: 3px solid var(--blue);
-      border-radius: 0 10px 10px 0; padding: 1rem 1.25rem; margin-bottom: 2rem; font-size: 0.9rem;
+      background: #f8fafc; border-left: 4px solid var(--curious-teal);
+      border-radius: 0 14px 14px 0; padding: 1.2rem 1.5rem; margin-bottom: 2.2rem; font-size: 0.92rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
     }
-    .mission-box strong { display: block; font-family: 'Syne', sans-serif; font-weight: 700; color: var(--navy); margin-bottom: 0.25rem; }
+    .mission-box strong { display: block; font-family: 'Syne', sans-serif; font-weight: 700; color: var(--navy); margin-bottom: 0.3rem; }
 
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-    @media(max-width:540px){ .form-row { grid-template-columns: 1fr; } }
-
-    .field { margin-bottom: 1.1rem; }
-    label { display: block; font-size: 0.82rem; font-weight: 600; color: var(--navy); margin-bottom: 0.38rem; }
+    .field { margin-bottom: 1.2rem; }
+    label { display: block; font-size: 0.82rem; font-weight: 600; color: var(--navy); margin-bottom: 0.4rem; }
 
     input[type="text"] {
-      width: 100%; padding: 0.72rem 1rem;
-      border: 1.5px solid var(--border); border-radius: 8px;
+      width: 100%; padding: 0.8rem 1rem;
+      border: 1.5px solid var(--border); border-radius: 12px;
       font-family: 'Source Sans 3', sans-serif; font-size: 0.95rem;
       color: var(--text); background: var(--surface);
       transition: border-color 0.2s, box-shadow 0.2s; outline: none;
     }
     input[type="text"]:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(37,99,235,0.12); }
 
-    /* ── BUTTONS ── */
     .btn {
-      border: none; cursor: pointer; border-radius: 9px;
+      border: none; cursor: pointer; border-radius: 12px;
       font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.92rem;
-      transition: background 0.2s, transform 0.1s; display: inline-flex;
-      align-items: center; justify-content: center; gap: 0.45rem;
+      transition: background 0.2s, transform 0.1s, box-shadow 0.2s; 
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
     }
-    .btn:active { transform: scale(0.985); }
-    .btn:disabled { opacity: 0.55; cursor: not-allowed; }
-    .btn-navy { background: var(--navy); color: #fff; padding: 0.85rem 1.75rem; width: 100%; }
-    .btn-navy:hover:not(:disabled) { background: #243156; }
-    .btn-green { background: var(--green); color: #fff; padding: 0.8rem 1.6rem; }
-    .btn-green:hover:not(:disabled) { background: #047857; }
-    .btn-outline { background: transparent; color: var(--navy); border: 1.5px solid var(--border); padding: 0.78rem 1.5rem; }
-    .btn-outline:hover { border-color: var(--navy); background: var(--bg); }
+    .btn:active { transform: scale(0.98); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn-navy { background: var(--navy); color: #fff; padding: 0.9rem 1.8rem; width: 100%; }
+    .btn-navy:hover:not(:disabled) { background: #2a3a5e; }
+    .btn-outline { background: transparent; color: var(--navy); border: 1.5px solid var(--border); padding: 0.8rem 1.5rem; }
+    .btn-outline:hover { border-color: var(--navy); background: #f1f5f9; }
     .btn-full { width: 100%; }
 
-    /* ── TERMINAL ── */
-    .terminal { border-radius: 12px; overflow: hidden; border: 1.5px solid var(--red-border); margin-bottom: 1.25rem; }
+    .terminal { border-radius: 16px; overflow: hidden; border: 1.5px solid #d1d5db; margin-bottom: 1.25rem; background: #ffffff; }
     .terminal-bar {
-      background: var(--red); color: #fff; padding: 0.55rem 1rem;
-      display: flex; align-items: center; gap: 0.55rem;
-      font-family: 'Fira Code', monospace; font-size: 0.76rem; letter-spacing: 0.04em;
+      background: #1e293b; color: #f1f5f9; padding: 0.65rem 1.2rem;
+      display: flex; align-items: center; gap: 0.6rem;
+      font-family: 'Fira Code', monospace; font-size: 0.78rem; letter-spacing: 0.03em;
     }
-    .led { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.6); animation: blink 2s infinite; }
-    @keyframes blink { 0%,100% { opacity:1; } 50% { opacity:0.25; } }
-    .err-code { margin-left: auto; opacity: 0.65; font-size: 0.7rem; }
+    .led { width: 8px; height: 8px; border-radius: 50%; background: #10b981; box-shadow: 0 0 6px #10b981; animation: blink 2s infinite; }
+    @keyframes blink { 0%,100% { opacity:1; } 50% { opacity:0.2; } }
+    .err-code { margin-left: auto; opacity: 0.7; font-size: 0.7rem; color: #cbd5e1; }
     .terminal-body {
-      background: var(--red-light); padding: 1.4rem 1.5rem;
-      font-family: 'Fira Code', monospace; font-size: 0.9rem; line-height: 1.75; color: #7f1d1d;
+      background: #f9fafb; padding: 1.5rem 1.5rem;
+      font-family: 'Fira Code', monospace; font-size: 0.9rem; line-height: 1.7; color: #1e293b;
     }
 
-    /* ── TASK CARD ── */
-    .task-card { background: var(--surface); border-radius: 12px; padding: 1.25rem 1.4rem; box-shadow: 0 1px 4px rgba(0,0,0,0.06); margin-bottom: 1rem; }
-    .task-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--blue); margin-bottom: 0.4rem; }
-    .task-q { font-family: 'Syne', sans-serif; font-size: 1.0rem; font-weight: 600; color: var(--navy); }
+    .task-card { background: var(--surface); border-radius: 16px; padding: 1.2rem 1.5rem; box-shadow: 0 4px 10px rgba(0,0,0,0.03); margin-bottom: 1rem; border: 1px solid #f1f5f9; }
+    .task-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--curious-teal); margin-bottom: 0.3rem; }
+    .task-q { font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 600; color: var(--navy); }
 
-    /* ── HINT ── */
-    .hint-toggle { font-size: 0.8rem; color: var(--muted); cursor: pointer; display: flex; align-items: center; gap: 0.3rem; margin-bottom: 0.75rem; width: fit-content; }
+    .hint-toggle { font-size: 0.82rem; color: var(--muted); cursor: pointer; display: flex; align-items: center; gap: 0.3rem; margin-bottom: 0.8rem; width: fit-content; }
     .hint-toggle:hover { color: var(--text); }
-    .hint-box { background: var(--amber-light); border: 1px solid var(--amber-border); border-radius: 8px; padding: 0.7rem 1rem; font-size: 0.84rem; color: #78350f; margin-bottom: 1rem; display: none; }
+    .hint-box { background: var(--amber-light); border: 1px solid var(--amber-border); border-radius: 12px; padding: 0.8rem 1.2rem; font-size: 0.84rem; color: #78350f; margin-bottom: 1.2rem; display: none; }
     .hint-box.on { display: block; }
 
-    /* ── RESPONSE GROUP ── */
-    .response-group { border: 1.5px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 1rem; transition: border-color 0.2s; }
-    .response-group:focus-within { border-color: var(--blue); }
+    .response-group { border: 1.5px solid var(--border); border-radius: 18px; overflow: hidden; margin-bottom: 1.2rem; background: #fff; }
+    .scaffold-box { background: var(--blue-light); padding: 0.9rem 1.2rem; border-bottom: 1.5px solid #bfdbfe; }
+    .scaffold-title { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--blue); margin-bottom: 0.7rem; }
+    .scaffold-steps { display: flex; flex-direction: column; gap: 0.5rem; }
+    .scaffold-step { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.82rem; color: #1e40af; }
+    .scaffold-num { flex-shrink: 0; width: 20px; height: 20px; background: var(--blue); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; }
 
-    .scaffold-box { background: var(--blue-light); padding: 0.85rem 1rem; border-bottom: 1.5px solid #bfdbfe; }
-    .scaffold-title { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--blue); margin-bottom: 0.55rem; }
-    .scaffold-steps { display: flex; flex-direction: column; gap: 0.4rem; }
-    .scaffold-step { display: flex; align-items: flex-start; gap: 0.55rem; font-size: 0.82rem; color: #1e40af; line-height: 1.4; }
-    .scaffold-num { flex-shrink: 0; width: 20px; height: 20px; border-radius: 50%; background: var(--blue); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 0.68rem; font-weight: 700; margin-top: 0.05rem; }
-
-    .response-box { background: var(--surface); }
-    .response-header { padding: 0.6rem 1rem; background: var(--bg); border-bottom: 1px solid var(--border); font-size: 0.78rem; font-weight: 600; color: var(--navy); }
+    .response-box { background: #fff; }
+    .response-header { padding: 0.7rem 1.2rem; background: #f8fafc; border-bottom: 1px solid var(--border); font-size: 0.8rem; font-weight: 600; color: var(--navy); }
     textarea {
-      width: 100%; border: none; padding: 1rem;
-      font-family: 'Source Sans 3', sans-serif; font-size: 0.95rem; line-height: 1.65;
-      color: var(--text); resize: vertical; min-height: 170px; outline: none; background: var(--surface);
+      width: 100%; border: none; padding: 1.2rem;
+      font-family: 'Source Sans 3', sans-serif; font-size: 0.95rem; line-height: 1.6;
+      color: var(--text); resize: vertical; min-height: 160px; outline: none; background: #ffffff;
     }
-    textarea:disabled { background: var(--bg); color: var(--muted); }
-    .char-row { padding: 0.45rem 1rem; border-top: 1px solid var(--border); font-size: 0.74rem; color: var(--muted); text-align: right; }
+    .char-row { padding: 0.4rem 1.2rem; border-top: 1px solid var(--border); font-size: 0.72rem; color: var(--muted); text-align: right; }
 
-    /* ── FEEDBACK ── */
-    .feedback-card {
-      border-radius: 12px; overflow: hidden; margin-top: 1.25rem; margin-bottom: 1rem;
+    .socratic-guide {
+      background: var(--teal-light); border: 1.5px solid var(--teal-border); border-radius: 20px;
+      padding: 1.5rem 1.8rem; margin-top: 1.5rem; margin-bottom: 0.8rem;
       opacity: 0; transform: translateY(10px);
-      transition: opacity 0.4s ease, transform 0.4s ease; display: none;
+      transition: opacity 0.35s ease, transform 0.35s ease; display: none;
     }
-    .feedback-card.on { display: block; }
-    .feedback-card.visible { opacity: 1; transform: translateY(0); }
-
-    /* Score-coloured variants */
-    .feedback-card.grade-strong { background: var(--green-light); border: 1.5px solid var(--green-border); }
-    .feedback-card.grade-partial { background: var(--amber-light); border: 1.5px solid var(--amber-border); }
-    .feedback-card.grade-weak    { background: var(--red-light);   border: 1.5px solid var(--red-border); }
-
-    .feedback-bar { color: #fff; padding: 0.55rem 1rem; font-family: 'Fira Code', monospace; font-size: 0.74rem; letter-spacing: 0.05em; display: flex; align-items: center; gap: 0.5rem; }
-    .grade-strong .feedback-bar { background: var(--green); }
-    .grade-partial .feedback-bar { background: var(--amber); }
-    .grade-weak    .feedback-bar { background: var(--red); }
-
-    .feedback-body { padding: 1.2rem 1.5rem; font-size: 0.94rem; line-height: 1.7; }
-    .grade-strong .feedback-body { color: #064e3b; }
-    .grade-partial .feedback-body { color: #78350f; }
-    .grade-weak    .feedback-body { color: #7f1d1d; }
-
-    .concept-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.75rem; }
-    .chip {
-      display: inline-flex; align-items: center; gap: 0.3rem;
-      padding: 0.22rem 0.65rem; border-radius: 100px;
-      font-size: 0.74rem; font-weight: 600;
+    .socratic-guide.on { display: block; }
+    .socratic-guide.visible { opacity: 1; transform: translateY(0); }
+    .guide-header { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.1rem; color: #0f766e; margin-bottom: 0.7rem; display: flex; align-items: center; gap: 0.4rem; }
+    .guide-body { font-size: 0.95rem; color: #134e4a; line-height: 1.7; }
+    .follow-up { margin-top: 1rem; font-style: italic; color: #0c4a6e; background: #f0f9ff; padding: 0.7rem 1rem; border-radius: 12px; }
+    .search-terms { margin-top: 1rem; display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+    .search-chip {
+      background: #ffffff; border: 1px solid #bae6fd; color: #0369a1; padding: 0.2rem 0.8rem;
+      border-radius: 20px; font-size: 0.8rem; font-weight: 500; 
     }
-    .chip-hit  { background: #d1fae5; color: #065f46; border: 1px solid #6ee7b7; }
-    .chip-miss { background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
 
-    /* ── INFO BAR ── */
-    .info-bar { font-size: 0.82rem; color: var(--muted); margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
+    .info-bar { font-size: 0.85rem; color: var(--muted); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
     .info-bar strong { color: var(--text); }
 
-    /* ── SPINNER ── */
-    .spinner { width: 15px; height: 15px; border: 2px solid rgba(255,255,255,0.35); border-top-color: #fff; border-radius: 50%; animation: spin 0.65s linear infinite; display: inline-block; }
+    .spinner { width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.4); border-top-color: #fff; border-radius: 50%; animation: spin 0.7s linear infinite; display: inline-block; }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* ── COMPLETE ── */
     .complete-card {
-      background: var(--surface); border-radius: 16px; padding: 3rem 2.75rem; text-align: center;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.07), 0 12px 32px rgba(0,0,0,0.05);
+      background: var(--surface); border-radius: 24px; padding: 2.8rem 2.2rem; text-align: center;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.04);
     }
-    .complete-icon { width: 72px; height: 72px; background: var(--green-light); border: 2px solid var(--green-border); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin: 0 auto 1.25rem; }
-    .complete-title { font-family: 'Syne', sans-serif; font-size: 1.9rem; font-weight: 800; color: var(--navy); margin-bottom: 0.45rem; }
-    .complete-sub { color: var(--muted); margin-bottom: 2rem; }
-    .summary-grid { display: grid; gap: 0.85rem; margin-bottom: 2rem; text-align: left; }
-    .summary-item { background: var(--bg); border-radius: 10px; padding: 1rem 1.15rem; }
-    .summary-lbl { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 0.3rem; }
-    .summary-txt { font-size: 0.87rem; color: var(--text); line-height: 1.5; }
-    .export-row { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
-    .status-msg { font-size: 0.84rem; color: var(--green); margin-top: 0.75rem; min-height: 1.2rem; }
+    .complete-icon { font-size: 2.4rem; margin-bottom: 1rem; }
+    .complete-title { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; color: var(--navy); margin-bottom: 0.4rem; }
+    .summary-grid { display: grid; gap: 0.8rem; margin: 2rem 0; text-align: left; }
+    .summary-item { background: #f9fafb; border-radius: 14px; padding: 1rem 1.2rem; }
+    .summary-lbl { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: var(--muted); }
+    .summary-txt { font-size: 0.85rem; margin-top: 0.2rem; }
 
-    /* ── MODAL ── */
-    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(15,23,42,0.55); z-index: 200; align-items: center; justify-content: center; padding: 1rem; }
-    .modal-overlay.on { display: flex; }
-    .modal { background: var(--surface); border-radius: 16px; max-width: 620px; width: 100%; max-height: 92vh; overflow-y: auto; padding: 2.25rem; }
-    .modal-title { font-family: 'Syne', sans-serif; font-size: 1.25rem; font-weight: 700; color: var(--navy); margin-bottom: 0.6rem; }
-    .modal-desc { font-size: 0.88rem; color: var(--muted); margin-bottom: 1.4rem; }
-    .steps { list-style: none; counter-reset: s; }
-    .steps li { counter-increment: s; display: flex; gap: 0.75rem; margin-bottom: 0.9rem; font-size: 0.88rem; }
-    .steps li::before { content: counter(s); flex-shrink: 0; width: 24px; height: 24px; background: var(--navy); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.72rem; font-weight: 700; }
-    .code-block { background: #0f172a; color: #e2e8f0; border-radius: 10px; padding: 1rem 1.1rem; font-family: 'Fira Code', monospace; font-size: 0.76rem; line-height: 1.65; overflow-x: auto; white-space: pre; margin: 0.5rem 0 0.6rem; }
-    .copy-btn { background: var(--blue); color: #fff; border: none; padding: 0.38rem 0.85rem; border-radius: 6px; font-size: 0.76rem; cursor: pointer; margin-bottom: 0.35rem; }
-    .copy-btn:hover { background: #1d4ed8; }
-
-    @media(max-width:580px){ .card, .complete-card { padding: 1.6rem 1.3rem; } .setup-title { font-size: 1.8rem; } .app { padding: 1rem 1rem 3rem; } }
+    @media(max-width:580px){ 
+      .card, .complete-card { padding: 1.8rem 1.2rem; } 
+      .setup-title { font-size: 1.9rem; } 
+    }
   </style>
 </head>
 <body>
@@ -245,7 +210,7 @@
       <div class="logo-icon">9K</div>
       <div>
         <div class="logo-name">FitBot-9000</div>
-        <div class="logo-sub">Debugger Console · IB SEHS</div>
+        <div class="logo-sub">Socratic debugger · IB SEHS</div>
       </div>
     </div>
     <div class="progress-wrap">
@@ -255,526 +220,342 @@
     </div>
   </header>
 
-  <!-- ══════════════ SETUP ══════════════ -->
+  <!-- SETUP (no class field) -->
   <div class="screen on" id="screen-setup">
     <div class="card">
-      <div class="badge">⚠ IB SEHS Activity</div>
+      <div class="badge">🧠 curiosity-driven thinking</div>
       <h1 class="setup-title">Debugging<br><em>FitBot-9000</em></h1>
-      <p class="setup-desc">Your school just bought a cheap AI health coach trained on fitness TikToks and bad science. You've been hired as Lead Data Scientist to fix it.</p>
+      <p class="setup-desc">A cheap AI coach trained on bad science. Your role: explore flawed outputs and refine scientific understanding — no grades, just guided reflection.</p>
       <div class="mission-box">
-        <strong>🎯 Your Mission</strong>
-        FitBot-9000 has produced 3 physiologically incorrect responses. For each one, identify the scientific flaws and rewrite a rigorous IB SEHS-level correction. The concept checker will evaluate your answers instantly.
+        <strong>🔍 Your exploration</strong>
+        FitBot-9000 produced 3 questionable statements. For each one, write your scientific perspective. You'll receive follow-up questions and suggested search terms to deepen your thinking.
       </div>
-      <div class="form-row">
-        <div class="field">
-          <label for="inp-name">Your Full Name</label>
-          <input type="text" id="inp-name" placeholder="e.g. María García">
-        </div>
-        <div class="field">
-          <label for="inp-class">Class / Section</label>
-          <input type="text" id="inp-class" placeholder="e.g. IB SEHS Y1 — P3">
-        </div>
+      <div class="field">
+        <label for="inp-name">Your name (to keep track)</label>
+        <input type="text" id="inp-name" placeholder="e.g. Alex Rivera" autocomplete="name">
       </div>
-      <button class="btn btn-navy" onclick="startActivity()">Begin Debugging Session →</button>
+      <button class="btn btn-navy" onclick="startActivity()">Begin exploration →</button>
     </div>
   </div>
 
-  <!-- ══════════════ ACTIVITY ══════════════ -->
+  <!-- ACTIVITY -->
   <div class="screen" id="screen-activity">
     <div class="info-bar" id="info-bar"></div>
 
     <div class="terminal" id="terminal">
       <div class="terminal-bar">
         <div class="led"></div>
-        <span id="term-label">FITBOT-9000 — OUTPUT #1</span>
+        <span id="term-label">FITBOT-9000 · OUTPUT #1</span>
         <span class="err-code" id="term-code"></span>
       </div>
       <div class="terminal-body" id="term-body"></div>
     </div>
 
     <div class="task-card">
-      <div class="task-label">📋 Your Task</div>
-      <div class="task-q">Identify the physiological flaws in this output, then write a scientifically rigorous correction using proper IB SEHS terminology and concepts.</div>
+      <div class="task-label">🧭 what do you notice?</div>
+      <div class="task-q">Identify the scientific weaknesses and rewrite a thoughtful correction using IB SEHS concepts.</div>
     </div>
 
     <div class="hint-toggle" onclick="toggleHint()">
-      <span id="hint-arr">▶</span> Need a hint? Click to reveal key concepts to address
+      <span id="hint-arr">▶</span> Stuck? Reveal concepts to consider
     </div>
     <div class="hint-box" id="hint-box"></div>
 
     <div class="response-group">
       <div class="scaffold-box">
-        <div class="scaffold-title">📐 Answer Structure — always follow this format</div>
+        <div class="scaffold-title">📐 suggested structure</div>
         <div class="scaffold-steps">
-          <div class="scaffold-step">
-            <div class="scaffold-num">1</div>
-            <div><strong>FLAW IDENTIFIED:</strong> FitBot-9000 incorrectly assumes that… because…</div>
-          </div>
-          <div class="scaffold-step">
-            <div class="scaffold-num">2</div>
-            <div><strong>CORRECTED EXPLANATION:</strong> The accurate physiological explanation is… (use IB SEHS terminology)</div>
-          </div>
-          <div class="scaffold-step">
-            <div class="scaffold-num">3</div>
-            <div><strong>EVIDENCE / EXAMPLE:</strong> For instance… / According to the IB SEHS syllabus…</div>
-          </div>
+          <div class="scaffold-step"><div class="scaffold-num">1</div><div><strong>Flaw identified:</strong> FitBot incorrectly assumes…</div></div>
+          <div class="scaffold-step"><div class="scaffold-num">2</div><div><strong>Corrected explanation:</strong> The accurate physiological view…</div></div>
+          <div class="scaffold-step"><div class="scaffold-num">3</div><div><strong>Evidence / example:</strong> For instance…</div></div>
         </div>
       </div>
       <div class="response-box">
-        <div class="response-header">✏ Your Scientific Correction</div>
-        <textarea id="response-ta" oninput="updateCC()"></textarea>
+        <div class="response-header">✏️ Your reflection</div>
+        <textarea id="response-ta" oninput="updateCC()" placeholder="Write your scientific correction here..."></textarea>
         <div class="char-row" id="char-row">0 characters</div>
       </div>
     </div>
 
-    <button class="btn btn-navy btn-full" id="submit-btn" onclick="submitResponse()">Submit Correction →</button>
+    <button class="btn btn-navy btn-full" id="submit-btn" onclick="submitReflection()">Share my thinking →</button>
 
-    <div class="feedback-card" id="feedback-card">
-      <div class="feedback-bar" id="feedback-bar">
-        <span id="feedback-icon">✓</span>
-        <span id="feedback-title">CONCEPT CHECK COMPLETE</span>
-        <span id="feedback-score" style="margin-left:auto;font-size:0.85rem;font-weight:700;"></span>
-      </div>
-      <div class="feedback-body" id="feedback-body"></div>
+    <div class="socratic-guide" id="socratic-guide">
+      <div class="guide-header"><span>💬</span> Socratic guide</div>
+      <div class="guide-body" id="guide-body"></div>
+      <div class="follow-up" id="follow-up-q"></div>
+      <div class="search-terms" id="search-terms"></div>
     </div>
 
-    <div id="next-area" style="display:none; margin-top:1rem;">
+    <div id="next-area" style="display:none; margin-top:1.2rem;">
       <button class="btn btn-navy btn-full" id="next-btn" onclick="nextOutput()"></button>
     </div>
   </div>
 
-  <!-- ══════════════ COMPLETE ══════════════ -->
+  <!-- COMPLETE -->
   <div class="screen" id="screen-complete">
     <div class="complete-card">
-      <div class="complete-icon">🎓</div>
-      <h2 class="complete-title">Neural Network Patched!</h2>
-      <p class="complete-sub">You've debugged all 3 of FitBot-9000's errors. Your corrections have been recorded below.</p>
+      <div class="complete-icon">🌿</div>
+      <h2 class="complete-title">Exploration complete</h2>
+      <p style="color:var(--muted); margin-bottom:1.5rem;">You've engaged with three FitBot misconceptions. Here's a summary of your reflections.</p>
       <div class="summary-grid" id="summary-grid"></div>
-      <div class="export-row">
-        <button class="btn btn-green" id="sheet-btn" onclick="exportToSheets()">📊 Send to Google Sheets</button>
-        <button class="btn btn-outline" onclick="downloadSummary()">⬇ Download as Text File</button>
-      </div>
-      <div class="status-msg" id="export-status"></div>
+      <button class="btn btn-outline" onclick="downloadSummary()" style="margin-top:0.8rem;">⬇ Download reflection log</button>
+      <p style="font-size:0.8rem; color:var(--muted); margin-top:0.8rem;">No data is sent anywhere — this stays with you.</p>
     </div>
   </div>
 </div>
 
-<!-- ══════════════ MODAL ══════════════ -->
-<div class="modal-overlay" id="modal" onclick="closeModalOut(event)">
-  <div class="modal">
-    <h3 class="modal-title">📊 Google Sheets Integration — Teacher Setup</h3>
-    <p class="modal-desc">Do this once. Students will be able to send their full conversation directly into your sheet.</p>
-    <ol class="steps">
-      <li><span>Create a new <strong>Google Sheet</strong> and open it.</span></li>
-      <li><span>Go to <strong>Extensions → Apps Script</strong> (top menu).</span></li>
-      <li><span>Delete any existing code, paste the code below, and save (Ctrl/Cmd + S):</span></li>
-    </ol>
-    <button class="copy-btn" onclick="copyScript()">Copy Code</button>
-    <div class="code-block" id="script-block"></div>
-    <ol class="steps" style="counter-reset:s 3; margin-top:1rem;">
-      <li><span>Click <strong>Deploy → New Deployment</strong>. Under "Select type" choose <strong>Web app</strong>.</span></li>
-      <li><span>Set "Execute as" → <strong>Me</strong>, "Who has access" → <strong>Anyone</strong>. Click <strong>Deploy</strong> and authorise.</span></li>
-      <li><span>Copy the <strong>Web app URL</strong> and paste it into the SHEET_URL variable in this HTML file.</span></li>
-    </ol>
-    <p style="font-size:0.82rem;color:var(--muted);margin-top:1rem;">Each submission will appear as a new row with the student's name, class, all three responses, and concept scores.</p>
-    <button class="btn btn-outline" onclick="closeModal()" style="width:100%;margin-top:1.25rem;">Close</button>
-  </div>
-</div>
-
 <script>
-/* ══════════════════════════════════
-   OUTPUTS + CONCEPT RUBRICS
-══════════════════════════════════ */
-const OUTPUTS = [
-  {
-    label: 'FITBOT-9000 — OUTPUT #1',
-    code:  'ERR: DEFINITION_NOT_FOUND_001',
-    text:  'Exercise is simply any movement a human body makes. Walking to your fridge, blinking your eyes, and sleeping all count as exercise because your muscles are technically active. There is no scientific difference between exercise and physical activity — scientists invented that distinction to sell gym memberships.',
-    hint:  '💡 Think about: What is the IB SEHS definition of exercise? Exercise is a subcategory of physical activity — not the same thing. The key qualifying words are: planned, structured, and repetitive, performed with the purpose of improving or maintaining one or more components of physical fitness. Does blinking qualify? Is sleeping planned to improve a fitness component?',
-
-    // Each concept: label shown to student, array of keyword patterns (any match = hit)
-    concepts: [
-      { label: 'Defines exercise correctly',        patterns: [/planned/, /structured/, /repetitive/] },
-      { label: 'Exercise ≠ physical activity',      patterns: [/subcategor/, /physical activity/, /distinction/, /different/] },
-      { label: 'Purpose: improve/maintain fitness', patterns: [/improv/, /maintain/, /fitness component/, /physical fitness/] },
-      { label: 'Rejects blink/sleep as exercise',   patterns: [/blink/, /sleep/, /involuntar/, /not planned/, /incidental/] },
-    ],
-    // Opening praise (always shown)
-    praiseStrong:  'Excellent work — you correctly dismantled FitBot\'s false equivalence between exercise and general physical activity.',
-    praisePartial: 'Good start — you identified the core flaw. Refine your answer by using the exact IB SEHS definition.',
-    praiseWeak:    'You\'ve spotted that something is wrong, but your correction needs more precise IB SEHS language.',
-    // Specific missing-concept prompts
-    missTips: {
-      'Defines exercise correctly':        'Try to include the three key adjectives from the IB SEHS definition: planned, structured, and repetitive.',
-      'Exercise ≠ physical activity':      'Make sure you explicitly state that exercise is a subcategory of physical activity, not the same thing.',
-      'Purpose: improve/maintain fitness': 'Don\'t forget the purpose clause: movements must be performed to improve or maintain one or more components of physical fitness.',
-      'Rejects blink/sleep as exercise':   'Directly address FitBot\'s examples (blinking, sleeping) and explain why they fail the definition.',
-    }
-  },
-  {
-    label: 'FITBOT-9000 — OUTPUT #2',
-    code:  'ERR: WEIGHT_HEALTH_CONFLATION_500',
-    text:  'If a human is already thin, they do not need to exercise. Their wellbeing is mathematically maximized because they are not carrying extra weight. Exercise is only for weight loss.',
-    hint:  '💡 Think about the IB SEHS syllabus benefits of physical activity: How does exercise affect the muscular system? The immune system? And which specific diseases does an active lifestyle help prevent? The list includes osteoporosis, obesity, hypertension, cardiovascular diseases, and Type 2 diabetes. Body weight tells you nothing about these risks.',
-    concepts: [
-      { label: 'Weight ≠ fitness/health',           patterns: [/weight/, /thin/, /body mass/, /bmi/, /leanness/, /not a proxy/, /not the same/] },
-      { label: 'Muscular system benefits',          patterns: [/muscular/, /muscle/, /strength/, /endurance/, /hypertrophy/] },
-      { label: 'Immune system benefits',            patterns: [/immune/, /immunity/, /defence/, /defense/] },
-      { label: 'Disease risk reduction',            patterns: [/osteoporosis/, /hypertension/, /cardiovascular/, /type 2 diabetes/, /diabetes/, /obesity/] },
-    ],
-    praiseStrong:  'Impressive — you correctly challenged the "thin = healthy" myth using system-level and disease-risk evidence from the syllabus.',
-    praisePartial: 'Good thinking. Strengthen your answer by naming the specific diseases the IB SEHS syllabus links to an inactive lifestyle.',
-    praiseWeak:    'You\'ve disagreed with FitBot, but the correction needs specific IB SEHS evidence about body systems and disease risk.',
-    missTips: {
-      'Weight ≠ fitness/health':    'Explicitly state that body weight is not a proxy for fitness or health — a thin person can still be unfit and at risk.',
-      'Muscular system benefits':   'Include how exercise positively affects the muscular system: strength, endurance, or hypertrophy.',
-      'Immune system benefits':     'Don\'t forget immune system function — the IB SEHS syllabus explicitly names this as a benefit of regular physical activity.',
-      'Disease risk reduction':     'Name at least two diseases from the IB SEHS list: osteoporosis, hypertension, cardiovascular disease, Type 2 diabetes.',
-    }
-  },
-  {
-    label: 'FITBOT-9000 — OUTPUT #3',
-    code:  'ERR: ADAPTATION_UNKNOWN_503',
-    text:  'Exercise is bad for wellbeing because it breaks muscle fibers, creates lactic acid, and spikes your heart rate to dangerous levels. It is a biological error to intentionally damage the human body.',
-    hint:  '💡 Think about: supercompensation — why does the body rebuild stronger after controlled stress? Consider the difference between acute damage (micro-tears, fatigue) and chronic positive adaptation (hypertrophy, improved baseline fitness). Also revisit Output #2: what does exercise do for the immune system and chronic disease risk? Does "damage" always equal harm?',
-    concepts: [
-      { label: 'Acute vs. chronic distinction',     patterns: [/acute/, /chronic/, /temporary/, /long.?term/, /short.?term/] },
-      { label: 'Supercompensation / adaptation',    patterns: [/supercompensation/, /adaptation/, /adapts/, /rebuilds/, /overload/, /baseline/] },
-      { label: 'Positive outcomes (hypertrophy…)',  patterns: [/hypertrophy/, /stronger/, /resilience/, /fitness/, /performance/, /capacity/] },
-      { label: 'Links to disease risk (Output #2)', patterns: [/cardiovascular/, /diabetes/, /hypertension/, /osteoporosis/, /immune/, /disease/] },
-    ],
-    praiseStrong:  'Excellent — you correctly explained the supercompensation cycle and distinguished acute stress from long-term positive adaptation.',
-    praisePartial: 'Good effort. Deepen your answer by explicitly naming supercompensation and linking the discussion to chronic disease risk.',
-    praiseWeak:    'You\'ve spotted that the body adapts, but your answer needs the specific IB SEHS mechanism (supercompensation) and terminology.',
-    missTips: {
-      'Acute vs. chronic distinction':    'Clearly separate the temporary, acute disruption (micro-tears, fatigue) from the long-term chronic adaptations that follow.',
-      'Supercompensation / adaptation':   'Name the supercompensation cycle: after a training stimulus, the body rebuilds beyond its previous baseline.',
-      'Positive outcomes (hypertrophy…)': 'Describe the beneficial adaptations: hypertrophy, increased strength, improved cardiovascular capacity, etc.',
-      'Links to disease risk (Output #2)':'Connect to Output #2: regular exercise reduces chronic disease risk (cardiovascular disease, Type 2 diabetes…).',
-    }
-  }
-];
-
-/* ══════════════════════════════════
-   EVALUATOR (runs in-browser, free)
-══════════════════════════════════ */
-function evaluate(idx, studentText) {
-  const out = OUTPUTS[idx];
-  const lower = studentText.toLowerCase();
-  const hits = [], misses = [];
-
-  out.concepts.forEach(c => {
-    // A concept is "hit" if at least 2 of its patterns match (or ≤2 patterns and all match)
-    const matchCount = c.patterns.filter(p => p.test(lower)).length;
-    const threshold  = c.patterns.length >= 3 ? 2 : 1;
-    if (matchCount >= threshold) hits.push(c.label);
-    else misses.push(c.label);
-  });
-
-  const score   = hits.length;
-  const total   = out.concepts.length;
-  const pct     = score / total;
-  const grade   = pct >= 0.75 ? 'strong' : pct >= 0.5 ? 'partial' : 'weak';
-
-  // Build feedback text
-  let praise = pct >= 0.75 ? out.praiseStrong : pct >= 0.5 ? out.praisePartial : out.praiseWeak;
-
-  let body = praise;
-
-  if (misses.length > 0) {
-    body += '\n\n📌 To strengthen your answer, also address:\n';
-    misses.forEach(m => { body += `• ${out.missTips[m]}\n`; });
-  } else {
-    body += '\n\n✅ You covered all the key IB SEHS concepts for this output — great scientific rigour!';
-  }
-
-  return { grade, score, total, hits, misses, body };
-}
-
-/* ══════════════════════════════════
-   GOOGLE SHEETS SCRIPT
-══════════════════════════════════ */
-const APPS_SCRIPT = `function doPost(e) {
-  try {
-    var sheet = SpreadsheetApp
-      .getActiveSpreadsheet()
-      .getActiveSheet();
-
-    var data = JSON.parse(e.parameter.data);
-
-    if (sheet.getLastRow() === 0) {
-      sheet.appendRow([
-        'Timestamp', 'Student Name', 'Class',
-        'Output 1 — Response', 'Output 1 — Score',
-        'Output 2 — Response', 'Output 2 — Score',
-        'Output 3 — Response', 'Output 3 — Score'
-      ]);
-    }
-
-    sheet.appendRow([
-      data.timestamp, data.studentName, data.className,
-      data.r0 || '', data.s0 || '',
-      data.r1 || '', data.s1 || '',
-      data.r2 || '', data.s2 || ''
-    ]);
-
-    return ContentService
-      .createTextOutput(JSON.stringify({ status: 'ok' }))
-      .setMimeType(ContentService.MimeType.JSON);
-  } catch (err) {
-    return ContentService
-      .createTextOutput(JSON.stringify({ status: 'error', msg: err.toString() }))
-      .setMimeType(ContentService.MimeType.JSON);
-  }
-}`;
-
-/* ══════════════════════════════════
-   TEACHER: paste your Google Apps
-   Script Web App URL here
-══════════════════════════════════ */
-const SHEET_URL = 'https://script.google.com/macros/s/AKfycbySGkj7TdsIufpVwD0zU8s_SNL3wEjGooqOae1o9kd--b1HYeu2x4bV8acd56_wY7XsQA/exec';
-
-/* ══════════════════════════════════
-   STATE
-══════════════════════════════════ */
-const S = { name: '', cls: '', idx: 0, responses: [], submitted: false };
-
-/* ══════════════════════════════════
-   UI HELPERS
-══════════════════════════════════ */
-function showScreen(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('on'));
-  document.getElementById('screen-' + id).classList.add('on');
-  document.getElementById('site-header').classList.toggle('visible', id !== 'setup');
-}
-
-function updateProgress() {
-  ['pd0','pd1','pd2'].forEach((id, i) => {
-    const d = document.getElementById(id);
-    d.classList.remove('active','done');
-    if (i < S.idx) d.classList.add('done');
-    else if (i === S.idx) d.classList.add('active');
-  });
-}
-
-function updateCC() {
-  const n = document.getElementById('response-ta').value.length;
-  document.getElementById('char-row').textContent = n + ' characters';
-}
-
-function toggleHint() {
-  const box = document.getElementById('hint-box');
-  const arr = document.getElementById('hint-arr');
-  arr.textContent = box.classList.toggle('on') ? '▼' : '▶';
-}
-
-/* ══════════════════════════════════
-   MODAL
-══════════════════════════════════ */
-function openModal() {
-  document.getElementById('script-block').textContent = APPS_SCRIPT;
-  document.getElementById('modal').classList.add('on');
-}
-function closeModal() { document.getElementById('modal').classList.remove('on'); }
-function closeModalOut(e) { if (e.target === document.getElementById('modal')) closeModal(); }
-function copyScript() {
-  navigator.clipboard.writeText(APPS_SCRIPT).then(() => {
-    const b = document.querySelector('.copy-btn');
-    b.textContent = '✓ Copied!';
-    setTimeout(() => b.textContent = 'Copy Code', 2200);
-  });
-}
-
-/* ══════════════════════════════════
-   ACTIVITY FLOW
-══════════════════════════════════ */
-function startActivity() {
-  const name = document.getElementById('inp-name').value.trim();
-  const cls  = document.getElementById('inp-class').value.trim();
-  if (!name || !cls) { alert('Please enter your name and class before starting.'); return; }
-  S.name = name; S.cls = cls;
-  S.idx = 0; S.responses = [];
-  showScreen('activity');
-  loadOutput(0);
-}
-
-function loadOutput(i) {
-  const out = OUTPUTS[i];
-  S.submitted = false;
-
-  document.getElementById('info-bar').innerHTML =
-    `<strong>${S.name}</strong> &middot; ${S.cls} &middot; Debugging Output ${i+1} of 3`;
-
-  document.getElementById('term-label').textContent = out.label;
-  document.getElementById('term-code').textContent  = out.code;
-  document.getElementById('term-body').textContent  = out.text;
-  document.getElementById('hint-box').textContent   = out.hint;
-  document.getElementById('hint-box').classList.remove('on');
-  document.getElementById('hint-arr').textContent   = '▶';
-
-  const ta = document.getElementById('response-ta');
-  ta.value = ''; ta.disabled = false;
-  document.getElementById('char-row').textContent = '0 characters';
-
-  const fc = document.getElementById('feedback-card');
-  fc.className = 'feedback-card';
-  document.getElementById('feedback-body').textContent = '';
-
-  const sb = document.getElementById('submit-btn');
-  sb.disabled = false; sb.textContent = 'Submit Correction →'; sb.style.display = '';
-
-  document.getElementById('next-area').style.display = 'none';
-
-  updateProgress();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function submitResponse() {
-  const txt = document.getElementById('response-ta').value.trim();
-  if (txt.length < 60) { alert('Please write a more complete response (aim for at least a paragraph).'); return; }
-  if (S.submitted) return;
-
-  const ta = document.getElementById('response-ta');
-  const sb = document.getElementById('submit-btn');
-  ta.disabled = true;
-  sb.disabled = true;
-  sb.innerHTML = '<span class="spinner"></span> Checking…';
-
-  // Small delay for UX feel, then evaluate synchronously
-  setTimeout(() => {
-    const result = evaluate(S.idx, txt);
-
-    // Render feedback
-    const fc = document.getElementById('feedback-card');
-    fc.className = `feedback-card grade-${result.grade} on`;
-
-    document.getElementById('feedback-score').textContent =
-      `${result.score}/${result.total} concepts`;
-
-    const iconMap = { strong: '✓', partial: '◐', weak: '⚠' };
-    const titleMap = {
-      strong:  'STRONG CORRECTION — PATCH ACCEPTED',
-      partial: 'PARTIAL CORRECTION — NEEDS REFINEMENT',
-      weak:    'INCOMPLETE CORRECTION — MORE DETAIL NEEDED',
-    };
-    document.getElementById('feedback-icon').textContent  = iconMap[result.grade];
-    document.getElementById('feedback-title').textContent = titleMap[result.grade];
-
-    // Body text + concept chips
-    const bodyEl = document.getElementById('feedback-body');
-    const lines = result.body.split('\n');
-    let html = '';
-    lines.forEach(line => {
-      if (line.startsWith('•')) {
-        html += `<div style="margin-left:1rem;margin-top:0.3rem;">• ${line.slice(1).trim()}</div>`;
-      } else if (line.trim()) {
-        html += `<p style="margin-bottom:0.5rem;">${line.trim()}</p>`;
+  (function() {
+    // --- OUTPUTS (unchanged concepts, but scoring removed) ---
+    const OUTPUTS = [
+      {
+        label: 'FITBOT-9000 — OUTPUT #1',
+        code: 'ERR: DEFINITION_NOT_FOUND_001',
+        text: 'Exercise is simply any movement a human body makes. Walking to your fridge, blinking your eyes, and sleeping all count as exercise because your muscles are technically active. There is no scientific difference between exercise and physical activity — scientists invented that distinction to sell gym memberships.',
+        hint: '💡 Consider: IB SEHS defines exercise as planned, structured, repetitive, and aimed at improving fitness. Does blinking meet those criteria?',
+        concepts: ['Defines exercise correctly','Exercise ≠ physical activity','Purpose: improve/maintain fitness','Rejects blink/sleep as exercise'],
+        followUp: 'How would you explain the difference between "physical activity" and "exercise" to someone who believes all movement is equal?',
+        searchTerms: ['IB SEHS exercise definition', 'physical activity vs exercise', 'planned structured repetitive movement']
+      },
+      {
+        label: 'FITBOT-9000 — OUTPUT #2',
+        code: 'ERR: WEIGHT_HEALTH_CONFLATION_500',
+        text: 'If a human is already thin, they do not need to exercise. Their wellbeing is mathematically maximized because they are not carrying extra weight. Exercise is only for weight loss.',
+        hint: '💡 Think about: muscular system, immune function, and diseases like osteoporosis, hypertension, Type 2 diabetes. Is weight the only indicator?',
+        concepts: ['Weight ≠ fitness/health','Muscular system benefits','Immune system benefits','Disease risk reduction'],
+        followUp: 'What would you say to a thin person who believes they don’t need to move? Which invisible health markers might they be ignoring?',
+        searchTerms: ['thin but unfit', 'exercise benefits beyond weight', 'IB SEHS disease prevention physical activity']
+      },
+      {
+        label: 'FITBOT-9000 — OUTPUT #3',
+        code: 'ERR: ADAPTATION_UNKNOWN_503',
+        text: 'Exercise is bad for wellbeing because it breaks muscle fibers, creates lactic acid, and spikes your heart rate to dangerous levels. It is a biological error to intentionally damage the human body.',
+        hint: '💡 Supercompensation, acute vs chronic adaptation, and how the body rebuilds stronger. Does temporary stress always equal harm?',
+        concepts: ['Acute vs. chronic distinction','Supercompensation / adaptation','Positive outcomes (hypertrophy…)','Links to disease risk'],
+        followUp: 'Can you think of another biological system where short-term stress leads to long-term improvement? How does that compare to exercise?',
+        searchTerms: ['supercompensation cycle', 'acute vs chronic exercise response', 'hormesis exercise adaptation']
       }
-    });
+    ];
 
-    // Concept chips
-    html += '<div class="concept-chips">';
-    OUTPUTS[S.idx].concepts.forEach(c => {
-      const hit = result.hits.includes(c.label);
-      html += `<span class="chip ${hit ? 'chip-hit' : 'chip-miss'}">${hit ? '✓' : '✗'} ${c.label}</span>`;
-    });
-    html += '</div>';
-    bodyEl.innerHTML = html;
+    const STATE = { name: '', idx: 0, reflections: [], submitted: false };
 
-    requestAnimationFrame(() => requestAnimationFrame(() => fc.classList.add('visible')));
+    /* ----- UI helpers ----- */
+    function showScreen(id) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('on'));
+      document.getElementById('screen-' + id).classList.add('on');
+    }
 
-    S.responses.push({ r: txt, score: `${result.score}/${result.total}`, grade: result.grade });
-    S.submitted = true;
-    sb.style.display = 'none';
+    function updateProgress() {
+      ['pd0','pd1','pd2'].forEach((id, i) => {
+        const dot = document.getElementById(id);
+        dot.classList.remove('active','done');
+        if (i < STATE.idx) dot.classList.add('done');
+        else if (i === STATE.idx) dot.classList.add('active');
+      });
+    }
 
-    const nb = document.getElementById('next-btn');
-    nb.textContent = S.idx < 2
-      ? `Continue to Output ${S.idx + 2} →`
-      : '🎓 Complete Debugging Session →';
-    if (S.idx === 2) nb.style.background = 'var(--green)';
-    document.getElementById('next-area').style.display = 'block';
-    fc.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  }, 600);
-}
+    function updateCC() {
+      const len = document.getElementById('response-ta').value.length;
+      document.getElementById('char-row').textContent = len + ' characters';
+    }
 
-function nextOutput() {
-  if (S.idx < 2) { S.idx++; loadOutput(S.idx); }
-  else { buildComplete(); showScreen('complete'); }
-}
+    function toggleHint() {
+      const box = document.getElementById('hint-box');
+      const arr = document.getElementById('hint-arr');
+      arr.textContent = box.classList.toggle('on') ? '▼' : '▶';
+    }
 
-function buildComplete() {
-  const grid = document.getElementById('summary-grid');
-  grid.innerHTML = '';
-  OUTPUTS.forEach((o, i) => {
-    const r = S.responses[i];
-    const preview = r?.r?.length > 220 ? r.r.slice(0,220) + '…' : (r?.r || '—');
-    const div = document.createElement('div');
-    div.className = 'summary-item';
-    div.innerHTML = `
-      <div class="summary-lbl">Output ${i+1} · ${o.code} · Score: ${r?.score || '—'}</div>
-      <div class="summary-txt">${preview}</div>`;
-    grid.appendChild(div);
-  });
-  if (!SHEET_URL) document.getElementById('sheet-btn').style.display = 'none';
-}
+    /* ----- Socratic response generator (no scores) ----- */
+    function buildSocraticGuide(idx, studentText) {
+      const out = OUTPUTS[idx];
+      const lower = studentText.toLowerCase();
+      const mentionedConcepts = [];
+      const missingConcepts = [];
 
-/* ══════════════════════════════════
-   EXPORT
-══════════════════════════════════ */
-async function exportToSheets() {
-  if (!SHEET_URL) return;
-  const btn = document.getElementById('sheet-btn');
-  const status = document.getElementById('export-status');
-  btn.disabled = true; btn.textContent = 'Sending…';
+      out.concepts.forEach(c => {
+        const patterns = {
+          'Defines exercise correctly': [/planned/, /structured/, /repetitive/],
+          'Exercise ≠ physical activity': [/subcategor/, /physical activity/, /distinction/, /different/],
+          'Purpose: improve/maintain fitness': [/improv/, /maintain/, /fitness component/],
+          'Rejects blink/sleep as exercise': [/blink/, /sleep/, /involuntar/, /incidental/],
+          'Weight ≠ fitness/health': [/weight/, /thin/, /body mass/, /bmi/, /not a proxy/],
+          'Muscular system benefits': [/muscular/, /muscle/, /strength/, /endurance/],
+          'Immune system benefits': [/immune/, /immunity/, /defence/, /defense/],
+          'Disease risk reduction': [/osteoporosis/, /hypertension/, /cardiovascular/, /type 2 diabetes/, /diabetes/],
+          'Acute vs. chronic distinction': [/acute/, /chronic/, /temporary/, /long.?term/],
+          'Supercompensation / adaptation': [/supercompensation/, /adaptation/, /rebuilds/, /overload/],
+          'Positive outcomes (hypertrophy…)': [/hypertrophy/, /stronger/, /resilience/, /capacity/],
+          'Links to disease risk': [/cardiovascular/, /diabetes/, /hypertension/, /immune/, /disease/]
+        };
+        const regexList = patterns[c] || [];
+        const match = regexList.some(r => r.test(lower));
+        if (match) mentionedConcepts.push(c);
+        else missingConcepts.push(c);
+      });
 
-  const payload = {
-    timestamp:   new Date().toLocaleString(),
-    studentName: S.name,
-    className:   S.cls,
-    r0: S.responses[0]?.r || '', s0: S.responses[0]?.score || '',
-    r1: S.responses[1]?.r || '', s1: S.responses[1]?.score || '',
-    r2: S.responses[2]?.r || '', s2: S.responses[2]?.score || '',
-  };
+      let guideHtml = '';
+      if (mentionedConcepts.length > 0) {
+        guideHtml += `<p>🔎 You touched on <strong>${mentionedConcepts.join(', ')}</strong>. That’s a great foundation.</p>`;
+      }
+      if (missingConcepts.length > 0) {
+        guideHtml += `<p style="margin-top:0.7rem;">🌱 You might also explore: <strong>${missingConcepts.join(', ')}</strong>. How could these fit into your explanation?</p>`;
+      } else if (mentionedConcepts.length === out.concepts.length) {
+        guideHtml += `<p>✨ You’ve considered all the core concepts — your reflection is thorough.</p>`;
+      }
 
-  try {
-    const body = new URLSearchParams();
-    body.append('data', JSON.stringify(payload));
-    await fetch(SHEET_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body });
-    status.textContent = '✓ Submitted! Check your Google Sheet for the new row.';
-    btn.textContent = '✓ Sent'; btn.style.background = '#047857';
-  } catch (err) {
-    status.style.color = 'var(--red)';
-    status.textContent = 'Connection failed. Please download the text file instead.';
-    btn.disabled = false; btn.textContent = '📊 Send to Google Sheets';
-  }
-}
+      if (studentText.length < 100) {
+        guideHtml += `<p style="margin-top:0.5rem;">📝 Your response is quite brief. Could you expand with a concrete example or IB SEHS term?</p>`;
+      }
 
-function downloadSummary() {
-  const lines = [
-    'FITBOT-9000 DEBUGGING ACTIVITY — STUDENT SUBMISSION',
-    '='.repeat(52),
-    `Student : ${S.name}`,
-    `Class   : ${S.cls}`,
-    `Date    : ${new Date().toLocaleString()}`,
-    ''
-  ];
-  OUTPUTS.forEach((o, i) => {
-    const r = S.responses[i];
-    lines.push('─'.repeat(52));
-    lines.push(`OUTPUT ${i+1}: ${o.code}  |  Score: ${r?.score || '—'}  |  Grade: ${r?.grade || '—'}`);
-    lines.push(''); lines.push('FITBOT-9000 SAID:'); lines.push(o.text);
-    lines.push(''); lines.push('STUDENT CORRECTION:'); lines.push(r?.r || '(no response)');
-    lines.push('');
-  });
+      return {
+        guideHtml,
+        followUp: out.followUp,
+        searchTerms: out.searchTerms
+      };
+    }
 
-  const blob = new Blob([lines.join('\n')], { type: 'text/plain' });
-  const url  = URL.createObjectURL(blob);
-  const a    = document.createElement('a');
-  a.href = url;
-  a.download = `FitBot9000_${S.name.replace(/\s+/g,'_')}_${new Date().toISOString().slice(0,10)}.txt`;
-  a.click();
-  URL.revokeObjectURL(url);
-}
+    function loadOutput(i) {
+      const out = OUTPUTS[i];
+      STATE.submitted = false;
+
+      document.getElementById('info-bar').innerHTML = `<strong>${STATE.name || 'Explorer'}</strong> · Debugging output ${i+1} of 3`;
+      document.getElementById('term-label').textContent = out.label;
+      document.getElementById('term-code').textContent = out.code;
+      document.getElementById('term-body').textContent = out.text;
+      document.getElementById('hint-box').textContent = out.hint;
+      document.getElementById('hint-box').classList.remove('on');
+      document.getElementById('hint-arr').textContent = '▶';
+
+      const ta = document.getElementById('response-ta');
+      ta.value = ''; ta.disabled = false;
+      document.getElementById('char-row').textContent = '0 characters';
+
+      const guide = document.getElementById('socratic-guide');
+      guide.classList.remove('on','visible');
+      document.getElementById('guide-body').innerHTML = '';
+      document.getElementById('follow-up-q').innerHTML = '';
+      document.getElementById('search-terms').innerHTML = '';
+
+      const btn = document.getElementById('submit-btn');
+      btn.disabled = false; btn.textContent = 'Share my thinking →'; btn.style.display = '';
+      document.getElementById('next-area').style.display = 'none';
+
+      updateProgress();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function submitReflection() {
+      const txt = document.getElementById('response-ta').value.trim();
+      if (txt.length < 40) {
+        alert('Please write a bit more — a few sentences help the guide respond meaningfully.');
+        return;
+      }
+      if (STATE.submitted) return;
+
+      const ta = document.getElementById('response-ta');
+      const btn = document.getElementById('submit-btn');
+      ta.disabled = true;
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner"></span> Reflecting…';
+
+      setTimeout(() => {
+        const result = buildSocraticGuide(STATE.idx, txt);
+        const guide = document.getElementById('socratic-guide');
+        
+        document.getElementById('guide-body').innerHTML = result.guideHtml;
+        document.getElementById('follow-up-q').textContent = '💭 ' + result.followUp;
+        
+        const termsDiv = document.getElementById('search-terms');
+        termsDiv.innerHTML = '<span style="font-weight:600; margin-right:0.3rem;">🔍 Try searching:</span>';
+        result.searchTerms.forEach(term => {
+          const span = document.createElement('span');
+          span.className = 'search-chip';
+          span.textContent = term;
+          termsDiv.appendChild(span);
+        });
+
+        guide.classList.add('on');
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => guide.classList.add('visible'));
+        });
+
+        STATE.reflections.push({ 
+          output: STATE.idx, 
+          text: txt, 
+          code: OUTPUTS[STATE.idx].code 
+        });
+        STATE.submitted = true;
+        btn.style.display = 'none';
+
+        const nextBtn = document.getElementById('next-btn');
+        nextBtn.textContent = STATE.idx < 2 ? `Continue to Output ${STATE.idx + 2} →` : '🌿 Finish exploration →';
+        document.getElementById('next-area').style.display = 'block';
+        guide.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }, 550);
+    }
+
+    function nextOutput() {
+      if (STATE.idx < 2) {
+        STATE.idx++;
+        loadOutput(STATE.idx);
+      } else {
+        buildComplete();
+        showScreen('complete');
+      }
+    }
+
+    function startActivity() {
+      const name = document.getElementById('inp-name').value.trim();
+      if (!name) { alert('Please enter your name to begin.'); return; }
+      STATE.name = name;
+      STATE.idx = 0;
+      STATE.reflections = [];
+      showScreen('activity');
+      loadOutput(0);
+    }
+
+    function buildComplete() {
+      const grid = document.getElementById('summary-grid');
+      grid.innerHTML = '';
+      OUTPUTS.forEach((o, i) => {
+        const entry = STATE.reflections.find(r => r.output === i);
+        const preview = entry?.text ? (entry.text.length > 200 ? entry.text.slice(0,200)+'…' : entry.text) : '—';
+        const div = document.createElement('div');
+        div.className = 'summary-item';
+        div.innerHTML = `<div class="summary-lbl">Output ${i+1} · ${o.code}</div><div class="summary-txt">${preview}</div>`;
+        grid.appendChild(div);
+      });
+    }
+
+    function downloadSummary() {
+      const lines = [
+        'FitBot-9000 Socratic exploration',
+        '=================================',
+        `Name: ${STATE.name}`,
+        `Date: ${new Date().toLocaleString()}`,
+        ''
+      ];
+      OUTPUTS.forEach((o, i) => {
+        const entry = STATE.reflections.find(r => r.output === i);
+        lines.push(`Output ${i+1} (${o.code})`);
+        lines.push('FitBot said: ' + o.text);
+        lines.push('Your reflection: ' + (entry?.text || '(not answered)'));
+        lines.push('');
+      });
+      const blob = new Blob([lines.join('\n')], {type:'text/plain'});
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `fitbot-exploration-${STATE.name.replace(/\s/g,'_')}.txt`;
+      a.click();
+    }
+
+    window.startActivity = startActivity;
+    window.submitReflection = submitReflection;
+    window.nextOutput = nextOutput;
+    window.toggleHint = toggleHint;
+    window.updateCC = updateCC;
+    window.downloadSummary = downloadSummary;
+  })();
 </script>
 </body>
 </html>
