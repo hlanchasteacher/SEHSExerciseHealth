@@ -37,112 +37,61 @@
       line-height: 1.65;
     }
 
-    /* ── LAYOUT ── */
-    .app {
-      max-width: 760px;
-      margin: 0 auto;
-      padding: 2rem 1.5rem 4rem;
-    }
+    .app { max-width: 760px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
 
     /* ── HEADER ── */
     .site-header {
-      display: none;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 1.75rem;
-      padding-bottom: 1.25rem;
-      border-bottom: 1px solid var(--border);
+      display: none; align-items: center; justify-content: space-between;
+      margin-bottom: 1.75rem; padding-bottom: 1.25rem; border-bottom: 1px solid var(--border);
     }
     .site-header.visible { display: flex; }
-
     .logo { display: flex; align-items: center; gap: 0.7rem; }
     .logo-icon {
-      width: 38px; height: 38px;
-      background: var(--navy);
-      border-radius: 9px;
+      width: 38px; height: 38px; background: var(--navy); border-radius: 9px;
       display: flex; align-items: center; justify-content: center;
-      font-family: 'Fira Code', monospace;
-      font-size: 0.75rem; color: #fff; font-weight: 500;
-      flex-shrink: 0;
+      font-family: 'Fira Code', monospace; font-size: 0.75rem; color: #fff; font-weight: 500; flex-shrink: 0;
     }
-    .logo-name {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.0rem; font-weight: 700; color: var(--navy); line-height: 1.1;
-    }
-    .logo-sub {
-      font-size: 0.68rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em;
-    }
-
+    .logo-name { font-family: 'Syne', sans-serif; font-size: 1.0rem; font-weight: 700; color: var(--navy); line-height: 1.1; }
+    .logo-sub  { font-size: 0.68rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
     .progress-wrap { display: flex; align-items: center; gap: 0.4rem; }
-    .pdot {
-      width: 11px; height: 11px; border-radius: 50%;
-      background: var(--border); transition: background 0.3s, transform 0.3s;
-    }
+    .pdot { width: 11px; height: 11px; border-radius: 50%; background: var(--border); transition: background 0.3s, transform 0.3s; }
     .pdot.active { background: var(--blue); transform: scale(1.2); }
-    .pdot.done  { background: var(--green); }
+    .pdot.done   { background: var(--green); }
 
     /* ── SCREENS ── */
     .screen { display: none; }
     .screen.on { display: block; animation: fadeUp 0.35s ease; }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(14px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
 
-    /* ── SETUP SCREEN ── */
+    /* ── CARD ── */
     .card {
-      background: var(--surface);
-      border-radius: 16px;
-      padding: 2.75rem;
+      background: var(--surface); border-radius: 16px; padding: 2.75rem;
       box-shadow: 0 1px 4px rgba(0,0,0,0.07), 0 12px 32px rgba(0,0,0,0.05);
     }
-
     .badge {
       display: inline-flex; align-items: center; gap: 0.35rem;
-      background: var(--amber-light); color: var(--amber);
-      border: 1px solid var(--amber-border);
+      background: var(--amber-light); color: var(--amber); border: 1px solid var(--amber-border);
       padding: 0.28rem 0.75rem; border-radius: 100px;
-      font-size: 0.72rem; font-weight: 700;
-      letter-spacing: 0.05em; text-transform: uppercase;
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
       margin-bottom: 1.4rem;
     }
-
     .setup-title {
-      font-family: 'Syne', sans-serif;
-      font-size: 2.4rem; font-weight: 800; color: var(--navy);
-      line-height: 1.05; margin-bottom: 0.7rem;
+      font-family: 'Syne', sans-serif; font-size: 2.4rem; font-weight: 800;
+      color: var(--navy); line-height: 1.05; margin-bottom: 0.7rem;
     }
     .setup-title em { color: var(--red); font-style: normal; }
-
-    .setup-desc {
-      color: var(--muted); font-size: 1.0rem; margin-bottom: 1.75rem;
-    }
-
+    .setup-desc { color: var(--muted); font-size: 1.0rem; margin-bottom: 1.75rem; }
     .mission-box {
-      background: var(--bg);
-      border-left: 3px solid var(--blue);
-      border-radius: 0 10px 10px 0;
-      padding: 1rem 1.25rem;
-      margin-bottom: 2rem; font-size: 0.9rem;
+      background: var(--bg); border-left: 3px solid var(--blue);
+      border-radius: 0 10px 10px 0; padding: 1rem 1.25rem; margin-bottom: 2rem; font-size: 0.9rem;
     }
-    .mission-box strong {
-      display: block; font-family: 'Syne', sans-serif; font-weight: 700;
-      color: var(--navy); margin-bottom: 0.25rem;
-    }
+    .mission-box strong { display: block; font-family: 'Syne', sans-serif; font-weight: 700; color: var(--navy); margin-bottom: 0.25rem; }
 
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
     @media(max-width:540px){ .form-row { grid-template-columns: 1fr; } }
 
     .field { margin-bottom: 1.1rem; }
-    label {
-      display: block; font-size: 0.82rem; font-weight: 600;
-      color: var(--navy); margin-bottom: 0.38rem;
-    }
-    .field-hint { font-size: 0.76rem; color: var(--muted); margin-top: 0.28rem; }
-    .link-btn {
-      color: var(--blue); cursor: pointer; text-decoration: underline;
-      background: none; border: none; font-size: inherit; font-family: inherit; padding: 0;
-    }
+    label { display: block; font-size: 0.82rem; font-weight: 600; color: var(--navy); margin-bottom: 0.38rem; }
 
     input[type="text"] {
       width: 100%; padding: 0.72rem 1rem;
@@ -151,251 +100,146 @@
       color: var(--text); background: var(--surface);
       transition: border-color 0.2s, box-shadow 0.2s; outline: none;
     }
-    input[type="text"]:focus {
-      border-color: var(--blue);
-      box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
-    }
+    input[type="text"]:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(37,99,235,0.12); }
 
     /* ── BUTTONS ── */
     .btn {
       border: none; cursor: pointer; border-radius: 9px;
-      font-family: 'Syne', sans-serif; font-weight: 700;
-      font-size: 0.92rem; transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
-      display: inline-flex; align-items: center; justify-content: center; gap: 0.45rem;
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.92rem;
+      transition: background 0.2s, transform 0.1s; display: inline-flex;
+      align-items: center; justify-content: center; gap: 0.45rem;
     }
     .btn:active { transform: scale(0.985); }
     .btn:disabled { opacity: 0.55; cursor: not-allowed; }
-    .btn-navy {
-      background: var(--navy); color: #fff; padding: 0.85rem 1.75rem; width: 100%;
-    }
+    .btn-navy { background: var(--navy); color: #fff; padding: 0.85rem 1.75rem; width: 100%; }
     .btn-navy:hover:not(:disabled) { background: #243156; }
-    .btn-green {
-      background: var(--green); color: #fff; padding: 0.8rem 1.6rem;
-    }
+    .btn-green { background: var(--green); color: #fff; padding: 0.8rem 1.6rem; }
     .btn-green:hover:not(:disabled) { background: #047857; }
-    .btn-outline {
-      background: transparent; color: var(--navy);
-      border: 1.5px solid var(--border); padding: 0.78rem 1.5rem;
-    }
+    .btn-outline { background: transparent; color: var(--navy); border: 1.5px solid var(--border); padding: 0.78rem 1.5rem; }
     .btn-outline:hover { border-color: var(--navy); background: var(--bg); }
     .btn-full { width: 100%; }
 
-    /* ── FITBOT TERMINAL ── */
-    .terminal {
-      border-radius: 12px; overflow: hidden;
-      border: 1.5px solid var(--red-border);
-      margin-bottom: 1.25rem;
-    }
+    /* ── TERMINAL ── */
+    .terminal { border-radius: 12px; overflow: hidden; border: 1.5px solid var(--red-border); margin-bottom: 1.25rem; }
     .terminal-bar {
-      background: var(--red); color: #fff;
-      padding: 0.55rem 1rem;
+      background: var(--red); color: #fff; padding: 0.55rem 1rem;
       display: flex; align-items: center; gap: 0.55rem;
-      font-family: 'Fira Code', monospace; font-size: 0.76rem;
-      letter-spacing: 0.04em;
+      font-family: 'Fira Code', monospace; font-size: 0.76rem; letter-spacing: 0.04em;
     }
-    .led {
-      width: 7px; height: 7px; border-radius: 50%;
-      background: rgba(255,255,255,0.6);
-      animation: blink 2s infinite;
-    }
-    @keyframes blink {
-      0%,100% { opacity: 1; } 50% { opacity: 0.25; }
-    }
+    .led { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.6); animation: blink 2s infinite; }
+    @keyframes blink { 0%,100% { opacity:1; } 50% { opacity:0.25; } }
     .err-code { margin-left: auto; opacity: 0.65; font-size: 0.7rem; }
-
     .terminal-body {
       background: var(--red-light); padding: 1.4rem 1.5rem;
-      font-family: 'Fira Code', monospace;
-      font-size: 0.9rem; line-height: 1.75; color: #7f1d1d;
+      font-family: 'Fira Code', monospace; font-size: 0.9rem; line-height: 1.75; color: #7f1d1d;
     }
 
     /* ── TASK CARD ── */
-    .task-card {
-      background: var(--surface);
-      border-radius: 12px; padding: 1.25rem 1.4rem;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-      margin-bottom: 1rem;
-    }
-    .task-label {
-      font-size: 0.72rem; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 0.07em;
-      color: var(--blue); margin-bottom: 0.4rem;
-    }
-    .task-q {
-      font-family: 'Syne', sans-serif; font-size: 1.0rem;
-      font-weight: 600; color: var(--navy);
-    }
+    .task-card { background: var(--surface); border-radius: 12px; padding: 1.25rem 1.4rem; box-shadow: 0 1px 4px rgba(0,0,0,0.06); margin-bottom: 1rem; }
+    .task-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--blue); margin-bottom: 0.4rem; }
+    .task-q { font-family: 'Syne', sans-serif; font-size: 1.0rem; font-weight: 600; color: var(--navy); }
 
     /* ── HINT ── */
-    .hint-toggle {
-      font-size: 0.8rem; color: var(--muted); cursor: pointer;
-      display: flex; align-items: center; gap: 0.3rem;
-      margin-bottom: 0.75rem; width: fit-content;
-    }
+    .hint-toggle { font-size: 0.8rem; color: var(--muted); cursor: pointer; display: flex; align-items: center; gap: 0.3rem; margin-bottom: 0.75rem; width: fit-content; }
     .hint-toggle:hover { color: var(--text); }
-    .hint-box {
-      background: var(--amber-light); border: 1px solid var(--amber-border);
-      border-radius: 8px; padding: 0.7rem 1rem;
-      font-size: 0.84rem; color: #78350f;
-      margin-bottom: 1rem; display: none;
-    }
+    .hint-box { background: var(--amber-light); border: 1px solid var(--amber-border); border-radius: 8px; padding: 0.7rem 1rem; font-size: 0.84rem; color: #78350f; margin-bottom: 1rem; display: none; }
     .hint-box.on { display: block; }
 
-    /* ── RESPONSE AREA ── */
-    .response-box {
-      background: var(--surface);
-      border: 1.5px solid var(--border);
-      border-radius: 12px; overflow: hidden;
-      margin-bottom: 1rem;
-      transition: border-color 0.2s;
-    }
-    .response-box:focus-within { border-color: var(--blue); }
-    .response-header {
-      padding: 0.6rem 1rem; background: var(--bg);
-      border-bottom: 1px solid var(--border);
-      font-size: 0.78rem; font-weight: 600; color: var(--navy);
-    }
+    /* ── RESPONSE GROUP ── */
+    .response-group { border: 1.5px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 1rem; transition: border-color 0.2s; }
+    .response-group:focus-within { border-color: var(--blue); }
+
+    .scaffold-box { background: var(--blue-light); padding: 0.85rem 1rem; border-bottom: 1.5px solid #bfdbfe; }
+    .scaffold-title { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--blue); margin-bottom: 0.55rem; }
+    .scaffold-steps { display: flex; flex-direction: column; gap: 0.4rem; }
+    .scaffold-step { display: flex; align-items: flex-start; gap: 0.55rem; font-size: 0.82rem; color: #1e40af; line-height: 1.4; }
+    .scaffold-num { flex-shrink: 0; width: 20px; height: 20px; border-radius: 50%; background: var(--blue); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 0.68rem; font-weight: 700; margin-top: 0.05rem; }
+
+    .response-box { background: var(--surface); }
+    .response-header { padding: 0.6rem 1rem; background: var(--bg); border-bottom: 1px solid var(--border); font-size: 0.78rem; font-weight: 600; color: var(--navy); }
     textarea {
       width: 100%; border: none; padding: 1rem;
-      font-family: 'Source Sans 3', sans-serif;
-      font-size: 0.95rem; line-height: 1.65;
-      color: var(--text); resize: vertical; min-height: 170px;
-      outline: none; background: var(--surface);
+      font-family: 'Source Sans 3', sans-serif; font-size: 0.95rem; line-height: 1.65;
+      color: var(--text); resize: vertical; min-height: 170px; outline: none; background: var(--surface);
     }
     textarea:disabled { background: var(--bg); color: var(--muted); }
-    .char-row {
-      padding: 0.45rem 1rem; border-top: 1px solid var(--border);
-      font-size: 0.74rem; color: var(--muted); text-align: right;
-    }
+    .char-row { padding: 0.45rem 1rem; border-top: 1px solid var(--border); font-size: 0.74rem; color: var(--muted); text-align: right; }
 
     /* ── FEEDBACK ── */
     .feedback-card {
-      background: var(--green-light);
-      border: 1.5px solid var(--green-border);
-      border-radius: 12px; overflow: hidden;
-      margin-top: 1.25rem; margin-bottom: 1rem;
+      border-radius: 12px; overflow: hidden; margin-top: 1.25rem; margin-bottom: 1rem;
       opacity: 0; transform: translateY(10px);
-      transition: opacity 0.4s ease, transform 0.4s ease;
-      display: none;
+      transition: opacity 0.4s ease, transform 0.4s ease; display: none;
     }
     .feedback-card.on { display: block; }
     .feedback-card.visible { opacity: 1; transform: translateY(0); }
-    .feedback-bar {
-      background: var(--green); color: #fff;
-      padding: 0.55rem 1rem;
-      font-family: 'Fira Code', monospace; font-size: 0.74rem;
-      letter-spacing: 0.05em;
-      display: flex; align-items: center; gap: 0.5rem;
-    }
-    .feedback-body {
-      padding: 1.2rem 1.5rem; font-size: 0.94rem;
-      line-height: 1.7; color: #064e3b;
-    }
 
-    /* ── STUDENT INFO BAR ── */
-    .info-bar {
-      font-size: 0.82rem; color: var(--muted);
-      margin-bottom: 1.5rem; padding-bottom: 1rem;
-      border-bottom: 1px solid var(--border);
+    /* Score-coloured variants */
+    .feedback-card.grade-strong { background: var(--green-light); border: 1.5px solid var(--green-border); }
+    .feedback-card.grade-partial { background: var(--amber-light); border: 1.5px solid var(--amber-border); }
+    .feedback-card.grade-weak    { background: var(--red-light);   border: 1.5px solid var(--red-border); }
+
+    .feedback-bar { color: #fff; padding: 0.55rem 1rem; font-family: 'Fira Code', monospace; font-size: 0.74rem; letter-spacing: 0.05em; display: flex; align-items: center; gap: 0.5rem; }
+    .grade-strong .feedback-bar { background: var(--green); }
+    .grade-partial .feedback-bar { background: var(--amber); }
+    .grade-weak    .feedback-bar { background: var(--red); }
+
+    .feedback-body { padding: 1.2rem 1.5rem; font-size: 0.94rem; line-height: 1.7; }
+    .grade-strong .feedback-body { color: #064e3b; }
+    .grade-partial .feedback-body { color: #78350f; }
+    .grade-weak    .feedback-body { color: #7f1d1d; }
+
+    .concept-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.75rem; }
+    .chip {
+      display: inline-flex; align-items: center; gap: 0.3rem;
+      padding: 0.22rem 0.65rem; border-radius: 100px;
+      font-size: 0.74rem; font-weight: 600;
     }
+    .chip-hit  { background: #d1fae5; color: #065f46; border: 1px solid #6ee7b7; }
+    .chip-miss { background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
+
+    /* ── INFO BAR ── */
+    .info-bar { font-size: 0.82rem; color: var(--muted); margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
     .info-bar strong { color: var(--text); }
 
     /* ── SPINNER ── */
-    .spinner {
-      width: 15px; height: 15px;
-      border: 2px solid rgba(255,255,255,0.35);
-      border-top-color: #fff; border-radius: 50%;
-      animation: spin 0.65s linear infinite; display: inline-block;
-    }
+    .spinner { width: 15px; height: 15px; border: 2px solid rgba(255,255,255,0.35); border-top-color: #fff; border-radius: 50%; animation: spin 0.65s linear infinite; display: inline-block; }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* ── COMPLETE SCREEN ── */
+    /* ── COMPLETE ── */
     .complete-card {
-      background: var(--surface); border-radius: 16px;
-      padding: 3rem 2.75rem; text-align: center;
+      background: var(--surface); border-radius: 16px; padding: 3rem 2.75rem; text-align: center;
       box-shadow: 0 1px 4px rgba(0,0,0,0.07), 0 12px 32px rgba(0,0,0,0.05);
     }
-    .complete-icon {
-      width: 72px; height: 72px;
-      background: var(--green-light); border: 2px solid var(--green-border);
-      border-radius: 50%; display: flex; align-items: center; justify-content: center;
-      font-size: 2rem; margin: 0 auto 1.25rem;
-    }
-    .complete-title {
-      font-family: 'Syne', sans-serif; font-size: 1.9rem;
-      font-weight: 800; color: var(--navy); margin-bottom: 0.45rem;
-    }
+    .complete-icon { width: 72px; height: 72px; background: var(--green-light); border: 2px solid var(--green-border); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin: 0 auto 1.25rem; }
+    .complete-title { font-family: 'Syne', sans-serif; font-size: 1.9rem; font-weight: 800; color: var(--navy); margin-bottom: 0.45rem; }
     .complete-sub { color: var(--muted); margin-bottom: 2rem; }
-
     .summary-grid { display: grid; gap: 0.85rem; margin-bottom: 2rem; text-align: left; }
     .summary-item { background: var(--bg); border-radius: 10px; padding: 1rem 1.15rem; }
-    .summary-lbl {
-      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 0.06em; color: var(--muted); margin-bottom: 0.3rem;
-    }
+    .summary-lbl { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 0.3rem; }
     .summary-txt { font-size: 0.87rem; color: var(--text); line-height: 1.5; }
-
-    .export-row {
-      display: flex; gap: 0.75rem;
-      justify-content: center; flex-wrap: wrap;
-    }
+    .export-row { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
     .status-msg { font-size: 0.84rem; color: var(--green); margin-top: 0.75rem; min-height: 1.2rem; }
 
     /* ── MODAL ── */
-    .modal-overlay {
-      display: none; position: fixed; inset: 0;
-      background: rgba(15,23,42,0.55); z-index: 200;
-      align-items: center; justify-content: center; padding: 1rem;
-    }
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(15,23,42,0.55); z-index: 200; align-items: center; justify-content: center; padding: 1rem; }
     .modal-overlay.on { display: flex; }
-    .modal {
-      background: var(--surface); border-radius: 16px;
-      max-width: 620px; width: 100%; max-height: 92vh;
-      overflow-y: auto; padding: 2.25rem;
-    }
-    .modal-title {
-      font-family: 'Syne', sans-serif; font-size: 1.25rem;
-      font-weight: 700; color: var(--navy); margin-bottom: 0.6rem;
-    }
+    .modal { background: var(--surface); border-radius: 16px; max-width: 620px; width: 100%; max-height: 92vh; overflow-y: auto; padding: 2.25rem; }
+    .modal-title { font-family: 'Syne', sans-serif; font-size: 1.25rem; font-weight: 700; color: var(--navy); margin-bottom: 0.6rem; }
     .modal-desc { font-size: 0.88rem; color: var(--muted); margin-bottom: 1.4rem; }
-
     .steps { list-style: none; counter-reset: s; }
-    .steps li {
-      counter-increment: s;
-      display: flex; gap: 0.75rem; margin-bottom: 0.9rem; font-size: 0.88rem;
-    }
-    .steps li::before {
-      content: counter(s);
-      flex-shrink: 0; width: 24px; height: 24px;
-      background: var(--navy); color: #fff; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.72rem; font-weight: 700;
-    }
-    .code-block {
-      background: #0f172a; color: #e2e8f0;
-      border-radius: 10px; padding: 1rem 1.1rem;
-      font-family: 'Fira Code', monospace; font-size: 0.76rem;
-      line-height: 1.65; overflow-x: auto; white-space: pre;
-      margin: 0.5rem 0 0.6rem;
-    }
-    .copy-btn {
-      background: var(--blue); color: #fff; border: none;
-      padding: 0.38rem 0.85rem; border-radius: 6px;
-      font-size: 0.76rem; cursor: pointer; margin-bottom: 0.35rem;
-    }
+    .steps li { counter-increment: s; display: flex; gap: 0.75rem; margin-bottom: 0.9rem; font-size: 0.88rem; }
+    .steps li::before { content: counter(s); flex-shrink: 0; width: 24px; height: 24px; background: var(--navy); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.72rem; font-weight: 700; }
+    .code-block { background: #0f172a; color: #e2e8f0; border-radius: 10px; padding: 1rem 1.1rem; font-family: 'Fira Code', monospace; font-size: 0.76rem; line-height: 1.65; overflow-x: auto; white-space: pre; margin: 0.5rem 0 0.6rem; }
+    .copy-btn { background: var(--blue); color: #fff; border: none; padding: 0.38rem 0.85rem; border-radius: 6px; font-size: 0.76rem; cursor: pointer; margin-bottom: 0.35rem; }
     .copy-btn:hover { background: #1d4ed8; }
 
-    @media(max-width:580px){
-      .card, .complete-card { padding: 1.6rem 1.3rem; }
-      .setup-title { font-size: 1.8rem; }
-      .app { padding: 1rem 1rem 3rem; }
-    }
+    @media(max-width:580px){ .card, .complete-card { padding: 1.6rem 1.3rem; } .setup-title { font-size: 1.8rem; } .app { padding: 1rem 1rem 3rem; } }
   </style>
 </head>
 <body>
 <div class="app">
 
-  <!-- SITE HEADER (hidden on setup) -->
   <header class="site-header" id="site-header">
     <div class="logo">
       <div class="logo-icon">9K</div>
@@ -411,18 +255,16 @@
     </div>
   </header>
 
-  <!-- ══════════════ SETUP SCREEN ══════════════ -->
+  <!-- ══════════════ SETUP ══════════════ -->
   <div class="screen on" id="screen-setup">
     <div class="card">
       <div class="badge">⚠ IB SEHS Activity</div>
       <h1 class="setup-title">Debugging<br><em>FitBot-9000</em></h1>
       <p class="setup-desc">Your school just bought a cheap AI health coach trained on fitness TikToks and bad science. You've been hired as Lead Data Scientist to fix it.</p>
-
       <div class="mission-box">
         <strong>🎯 Your Mission</strong>
-        FitBot-9000 has produced 3 physiologically incorrect responses. For each one, identify the scientific flaws and rewrite a rigorous IB SEHS-level correction. An AI teacher will evaluate your answers.
+        FitBot-9000 has produced 3 physiologically incorrect responses. For each one, identify the scientific flaws and rewrite a rigorous IB SEHS-level correction. The concept checker will evaluate your answers instantly.
       </div>
-
       <div class="form-row">
         <div class="field">
           <label for="inp-name">Your Full Name</label>
@@ -433,16 +275,14 @@
           <input type="text" id="inp-class" placeholder="e.g. IB SEHS Y1 — P3">
         </div>
       </div>
-
       <button class="btn btn-navy" onclick="startActivity()">Begin Debugging Session →</button>
     </div>
   </div>
 
-  <!-- ══════════════ ACTIVITY SCREEN ══════════════ -->
+  <!-- ══════════════ ACTIVITY ══════════════ -->
   <div class="screen" id="screen-activity">
     <div class="info-bar" id="info-bar"></div>
 
-    <!-- FitBot terminal -->
     <div class="terminal" id="terminal">
       <div class="terminal-bar">
         <div class="led"></div>
@@ -452,52 +292,64 @@
       <div class="terminal-body" id="term-body"></div>
     </div>
 
-    <!-- Task prompt -->
     <div class="task-card">
       <div class="task-label">📋 Your Task</div>
       <div class="task-q">Identify the physiological flaws in this output, then write a scientifically rigorous correction using proper IB SEHS terminology and concepts.</div>
     </div>
 
-    <!-- Hint -->
     <div class="hint-toggle" onclick="toggleHint()">
       <span id="hint-arr">▶</span> Need a hint? Click to reveal key concepts to address
     </div>
     <div class="hint-box" id="hint-box"></div>
 
-    <!-- Response -->
-    <div class="response-box">
-      <div class="response-header">✏ Your Scientific Correction</div>
-      <textarea id="response-ta"
-        placeholder="Structure your answer:&#10;&#10;1. FLAW IDENTIFIED: FitBot-9000 incorrectly assumes that... because...&#10;&#10;2. CORRECTED EXPLANATION: The accurate physiological explanation is..."
-        oninput="updateCC()"></textarea>
-      <div class="char-row" id="char-row">0 characters</div>
+    <div class="response-group">
+      <div class="scaffold-box">
+        <div class="scaffold-title">📐 Answer Structure — always follow this format</div>
+        <div class="scaffold-steps">
+          <div class="scaffold-step">
+            <div class="scaffold-num">1</div>
+            <div><strong>FLAW IDENTIFIED:</strong> FitBot-9000 incorrectly assumes that… because…</div>
+          </div>
+          <div class="scaffold-step">
+            <div class="scaffold-num">2</div>
+            <div><strong>CORRECTED EXPLANATION:</strong> The accurate physiological explanation is… (use IB SEHS terminology)</div>
+          </div>
+          <div class="scaffold-step">
+            <div class="scaffold-num">3</div>
+            <div><strong>EVIDENCE / EXAMPLE:</strong> For instance… / According to the IB SEHS syllabus…</div>
+          </div>
+        </div>
+      </div>
+      <div class="response-box">
+        <div class="response-header">✏ Your Scientific Correction</div>
+        <textarea id="response-ta" oninput="updateCC()"></textarea>
+        <div class="char-row" id="char-row">0 characters</div>
+      </div>
     </div>
 
     <button class="btn btn-navy btn-full" id="submit-btn" onclick="submitResponse()">Submit Correction →</button>
 
-    <!-- Feedback -->
     <div class="feedback-card" id="feedback-card">
-      <div class="feedback-bar">
-        <span>✓</span> AI TEACHER FEEDBACK — PATCH ANALYSIS COMPLETE
+      <div class="feedback-bar" id="feedback-bar">
+        <span id="feedback-icon">✓</span>
+        <span id="feedback-title">CONCEPT CHECK COMPLETE</span>
+        <span id="feedback-score" style="margin-left:auto;font-size:0.85rem;font-weight:700;"></span>
       </div>
       <div class="feedback-body" id="feedback-body"></div>
     </div>
 
-    <!-- Next -->
     <div id="next-area" style="display:none; margin-top:1rem;">
       <button class="btn btn-navy btn-full" id="next-btn" onclick="nextOutput()"></button>
     </div>
   </div>
 
-  <!-- ══════════════ COMPLETE SCREEN ══════════════ -->
+  <!-- ══════════════ COMPLETE ══════════════ -->
   <div class="screen" id="screen-complete">
     <div class="complete-card">
       <div class="complete-icon">🎓</div>
       <h2 class="complete-title">Neural Network Patched!</h2>
       <p class="complete-sub">You've debugged all 3 of FitBot-9000's errors. Your corrections have been recorded below.</p>
-
       <div class="summary-grid" id="summary-grid"></div>
-
       <div class="export-row">
         <button class="btn btn-green" id="sheet-btn" onclick="exportToSheets()">📊 Send to Google Sheets</button>
         <button class="btn btn-outline" onclick="downloadSummary()">⬇ Download as Text File</button>
@@ -505,39 +357,33 @@
       <div class="status-msg" id="export-status"></div>
     </div>
   </div>
+</div>
 
-</div><!-- end .app -->
-
-<!-- ══════════════ MODAL: Setup Instructions ══════════════ -->
+<!-- ══════════════ MODAL ══════════════ -->
 <div class="modal-overlay" id="modal" onclick="closeModalOut(event)">
   <div class="modal">
     <h3 class="modal-title">📊 Google Sheets Integration — Teacher Setup</h3>
     <p class="modal-desc">Do this once. Students will be able to send their full conversation directly into your sheet.</p>
-
     <ol class="steps">
       <li><span>Create a new <strong>Google Sheet</strong> and open it.</span></li>
       <li><span>Go to <strong>Extensions → Apps Script</strong> (top menu).</span></li>
       <li><span>Delete any existing code, paste the code below, and save (Ctrl/Cmd + S):</span></li>
     </ol>
-
     <button class="copy-btn" onclick="copyScript()">Copy Code</button>
     <div class="code-block" id="script-block"></div>
-
     <ol class="steps" style="counter-reset:s 3; margin-top:1rem;">
       <li><span>Click <strong>Deploy → New Deployment</strong>. Under "Select type" choose <strong>Web app</strong>.</span></li>
       <li><span>Set "Execute as" → <strong>Me</strong>, "Who has access" → <strong>Anyone</strong>. Click <strong>Deploy</strong> and authorise.</span></li>
-      <li><span>Copy the <strong>Web app URL</strong> and share it with your students to paste in the form.</span></li>
+      <li><span>Copy the <strong>Web app URL</strong> and paste it into the SHEET_URL variable in this HTML file.</span></li>
     </ol>
-
-    <p style="font-size:0.82rem;color:var(--muted);margin-top:1rem;">Each submission will appear as a new row with the student's name, class, all three responses, and AI feedback.</p>
-
+    <p style="font-size:0.82rem;color:var(--muted);margin-top:1rem;">Each submission will appear as a new row with the student's name, class, all three responses, and concept scores.</p>
     <button class="btn btn-outline" onclick="closeModal()" style="width:100%;margin-top:1.25rem;">Close</button>
   </div>
 </div>
 
 <script>
 /* ══════════════════════════════════
-   DATA
+   OUTPUTS + CONCEPT RUBRICS
 ══════════════════════════════════ */
 const OUTPUTS = [
   {
@@ -545,24 +391,109 @@ const OUTPUTS = [
     code:  'ERR: DEFINITION_NOT_FOUND_001',
     text:  'Exercise is simply any movement a human body makes. Walking to your fridge, blinking your eyes, and sleeping all count as exercise because your muscles are technically active. There is no scientific difference between exercise and physical activity — scientists invented that distinction to sell gym memberships.',
     hint:  '💡 Think about: What is the IB SEHS definition of exercise? Exercise is a subcategory of physical activity — not the same thing. The key qualifying words are: planned, structured, and repetitive, performed with the purpose of improving or maintaining one or more components of physical fitness. Does blinking qualify? Is sleeping planned to improve a fitness component?',
-    eval:  'The IB SEHS definition of exercise: a subcategory of physical activity where planned, structured and repetitive bodily movements are performed to improve or maintain one or more components of physical fitness. Students must clearly distinguish exercise from general physical activity, and explain why incidental or involuntary movements (blinking, sleeping, digesting) do not qualify as exercise under this definition.'
+
+    // Each concept: label shown to student, array of keyword patterns (any match = hit)
+    concepts: [
+      { label: 'Defines exercise correctly',        patterns: [/planned/, /structured/, /repetitive/] },
+      { label: 'Exercise ≠ physical activity',      patterns: [/subcategor/, /physical activity/, /distinction/, /different/] },
+      { label: 'Purpose: improve/maintain fitness', patterns: [/improv/, /maintain/, /fitness component/, /physical fitness/] },
+      { label: 'Rejects blink/sleep as exercise',   patterns: [/blink/, /sleep/, /involuntar/, /not planned/, /incidental/] },
+    ],
+    // Opening praise (always shown)
+    praiseStrong:  'Excellent work — you correctly dismantled FitBot\'s false equivalence between exercise and general physical activity.',
+    praisePartial: 'Good start — you identified the core flaw. Refine your answer by using the exact IB SEHS definition.',
+    praiseWeak:    'You\'ve spotted that something is wrong, but your correction needs more precise IB SEHS language.',
+    // Specific missing-concept prompts
+    missTips: {
+      'Defines exercise correctly':        'Try to include the three key adjectives from the IB SEHS definition: planned, structured, and repetitive.',
+      'Exercise ≠ physical activity':      'Make sure you explicitly state that exercise is a subcategory of physical activity, not the same thing.',
+      'Purpose: improve/maintain fitness': 'Don\'t forget the purpose clause: movements must be performed to improve or maintain one or more components of physical fitness.',
+      'Rejects blink/sleep as exercise':   'Directly address FitBot\'s examples (blinking, sleeping) and explain why they fail the definition.',
+    }
   },
   {
     label: 'FITBOT-9000 — OUTPUT #2',
     code:  'ERR: WEIGHT_HEALTH_CONFLATION_500',
     text:  'If a human is already thin, they do not need to exercise. Their wellbeing is mathematically maximized because they are not carrying extra weight. Exercise is only for weight loss.',
     hint:  '💡 Think about the IB SEHS syllabus benefits of physical activity: How does exercise affect the muscular system? The immune system? And which specific diseases does an active lifestyle help prevent? The list includes osteoporosis, obesity, hypertension, cardiovascular diseases, and Type 2 diabetes. Body weight tells you nothing about these risks.',
-    eval:  'Per the IB SEHS syllabus: physical activity can positively affect muscular system function (strength, endurance, hypertrophy) and immune system function. An active lifestyle reduces the risk of osteoporosis, obesity, hypertension, cardiovascular diseases, and Type 2 diabetes. Body leanness is not a proxy for fitness or disease prevention. Students must dismantle the "thin = healthy" myth using these specific system-level and disease-risk arguments.'
+    concepts: [
+      { label: 'Weight ≠ fitness/health',           patterns: [/weight/, /thin/, /body mass/, /bmi/, /leanness/, /not a proxy/, /not the same/] },
+      { label: 'Muscular system benefits',          patterns: [/muscular/, /muscle/, /strength/, /endurance/, /hypertrophy/] },
+      { label: 'Immune system benefits',            patterns: [/immune/, /immunity/, /defence/, /defense/] },
+      { label: 'Disease risk reduction',            patterns: [/osteoporosis/, /hypertension/, /cardiovascular/, /type 2 diabetes/, /diabetes/, /obesity/] },
+    ],
+    praiseStrong:  'Impressive — you correctly challenged the "thin = healthy" myth using system-level and disease-risk evidence from the syllabus.',
+    praisePartial: 'Good thinking. Strengthen your answer by naming the specific diseases the IB SEHS syllabus links to an inactive lifestyle.',
+    praiseWeak:    'You\'ve disagreed with FitBot, but the correction needs specific IB SEHS evidence about body systems and disease risk.',
+    missTips: {
+      'Weight ≠ fitness/health':    'Explicitly state that body weight is not a proxy for fitness or health — a thin person can still be unfit and at risk.',
+      'Muscular system benefits':   'Include how exercise positively affects the muscular system: strength, endurance, or hypertrophy.',
+      'Immune system benefits':     'Don\'t forget immune system function — the IB SEHS syllabus explicitly names this as a benefit of regular physical activity.',
+      'Disease risk reduction':     'Name at least two diseases from the IB SEHS list: osteoporosis, hypertension, cardiovascular disease, Type 2 diabetes.',
+    }
   },
   {
     label: 'FITBOT-9000 — OUTPUT #3',
     code:  'ERR: ADAPTATION_UNKNOWN_503',
     text:  'Exercise is bad for wellbeing because it breaks muscle fibers, creates lactic acid, and spikes your heart rate to dangerous levels. It is a biological error to intentionally damage the human body.',
     hint:  '💡 Think about: supercompensation — why does the body rebuild stronger after controlled stress? Consider the difference between acute damage (micro-tears, fatigue) and chronic positive adaptation (hypertrophy, improved baseline fitness). Also revisit Output #2: what does exercise do for the immune system and chronic disease risk? Does "damage" always equal harm?',
-    eval:  'The supercompensation cycle: acute, controlled stress (micro-tears, metabolic fatigue) is the necessary biological trigger for chronic positive adaptation — the body rebuilds beyond its previous baseline, increasing strength, resilience, and fitness. Students must also connect this to Output #2 concepts: far from being harmful, regular exercise reduces risk of cardiovascular disease, hypertension, Type 2 diabetes, and supports muscular and immune system function. They must distinguish acute temporary disruption from long-term beneficial adaptation.'
+    concepts: [
+      { label: 'Acute vs. chronic distinction',     patterns: [/acute/, /chronic/, /temporary/, /long.?term/, /short.?term/] },
+      { label: 'Supercompensation / adaptation',    patterns: [/supercompensation/, /adaptation/, /adapts/, /rebuilds/, /overload/, /baseline/] },
+      { label: 'Positive outcomes (hypertrophy…)',  patterns: [/hypertrophy/, /stronger/, /resilience/, /fitness/, /performance/, /capacity/] },
+      { label: 'Links to disease risk (Output #2)', patterns: [/cardiovascular/, /diabetes/, /hypertension/, /osteoporosis/, /immune/, /disease/] },
+    ],
+    praiseStrong:  'Excellent — you correctly explained the supercompensation cycle and distinguished acute stress from long-term positive adaptation.',
+    praisePartial: 'Good effort. Deepen your answer by explicitly naming supercompensation and linking the discussion to chronic disease risk.',
+    praiseWeak:    'You\'ve spotted that the body adapts, but your answer needs the specific IB SEHS mechanism (supercompensation) and terminology.',
+    missTips: {
+      'Acute vs. chronic distinction':    'Clearly separate the temporary, acute disruption (micro-tears, fatigue) from the long-term chronic adaptations that follow.',
+      'Supercompensation / adaptation':   'Name the supercompensation cycle: after a training stimulus, the body rebuilds beyond its previous baseline.',
+      'Positive outcomes (hypertrophy…)': 'Describe the beneficial adaptations: hypertrophy, increased strength, improved cardiovascular capacity, etc.',
+      'Links to disease risk (Output #2)':'Connect to Output #2: regular exercise reduces chronic disease risk (cardiovascular disease, Type 2 diabetes…).',
+    }
   }
 ];
 
+/* ══════════════════════════════════
+   EVALUATOR (runs in-browser, free)
+══════════════════════════════════ */
+function evaluate(idx, studentText) {
+  const out = OUTPUTS[idx];
+  const lower = studentText.toLowerCase();
+  const hits = [], misses = [];
+
+  out.concepts.forEach(c => {
+    // A concept is "hit" if at least 2 of its patterns match (or ≤2 patterns and all match)
+    const matchCount = c.patterns.filter(p => p.test(lower)).length;
+    const threshold  = c.patterns.length >= 3 ? 2 : 1;
+    if (matchCount >= threshold) hits.push(c.label);
+    else misses.push(c.label);
+  });
+
+  const score   = hits.length;
+  const total   = out.concepts.length;
+  const pct     = score / total;
+  const grade   = pct >= 0.75 ? 'strong' : pct >= 0.5 ? 'partial' : 'weak';
+
+  // Build feedback text
+  let praise = pct >= 0.75 ? out.praiseStrong : pct >= 0.5 ? out.praisePartial : out.praiseWeak;
+
+  let body = praise;
+
+  if (misses.length > 0) {
+    body += '\n\n📌 To strengthen your answer, also address:\n';
+    misses.forEach(m => { body += `• ${out.missTips[m]}\n`; });
+  } else {
+    body += '\n\n✅ You covered all the key IB SEHS concepts for this output — great scientific rigour!';
+  }
+
+  return { grade, score, total, hits, misses, body };
+}
+
+/* ══════════════════════════════════
+   GOOGLE SHEETS SCRIPT
+══════════════════════════════════ */
 const APPS_SCRIPT = `function doPost(e) {
   try {
     var sheet = SpreadsheetApp
@@ -571,29 +502,25 @@ const APPS_SCRIPT = `function doPost(e) {
 
     var data = JSON.parse(e.parameter.data);
 
-    // Add header row if sheet is empty
     if (sheet.getLastRow() === 0) {
       sheet.appendRow([
         'Timestamp', 'Student Name', 'Class',
-        'Output 1 — Response', 'Output 1 — AI Feedback',
-        'Output 2 — Response', 'Output 2 — AI Feedback',
-        'Output 3 — Response', 'Output 3 — AI Feedback'
+        'Output 1 — Response', 'Output 1 — Score',
+        'Output 2 — Response', 'Output 2 — Score',
+        'Output 3 — Response', 'Output 3 — Score'
       ]);
     }
 
     sheet.appendRow([
-      data.timestamp,
-      data.studentName,
-      data.className,
-      data.r0 || '', data.f0 || '',
-      data.r1 || '', data.f1 || '',
-      data.r2 || '', data.f2 || ''
+      data.timestamp, data.studentName, data.className,
+      data.r0 || '', data.s0 || '',
+      data.r1 || '', data.s1 || '',
+      data.r2 || '', data.s2 || ''
     ]);
 
     return ContentService
       .createTextOutput(JSON.stringify({ status: 'ok' }))
       .setMimeType(ContentService.MimeType.JSON);
-
   } catch (err) {
     return ContentService
       .createTextOutput(JSON.stringify({ status: 'error', msg: err.toString() }))
@@ -602,30 +529,22 @@ const APPS_SCRIPT = `function doPost(e) {
 }`;
 
 /* ══════════════════════════════════
-   CONFIGURATION — Teacher: paste your
-   Google Apps Script Web App URL below
+   TEACHER: paste your Google Apps
+   Script Web App URL here
 ══════════════════════════════════ */
-const SHEET_URL = 'https://script.google.com/macros/s/AKfycbySGkj7TdsIufpVwD0zU8s_SNL3wEjGooqOae1o9kd--b1HYeu2x4bV8acd56_wY7XsQA/exec'; // ← Paste your URL here
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycbySGkj7TdsIufpVwD0zU8s_SNL3wEjGooqOae1o9kd--b1HYeu2x4bV8acd56_wY7XsQA/exec';
 
 /* ══════════════════════════════════
    STATE
 ══════════════════════════════════ */
-const S = {
-  name: '', cls: '',
-  idx: 0,                 // current output index
-  responses: [],          // [{r, f}]  r=student text, f=AI feedback
-  submitted: false
-};
+const S = { name: '', cls: '', idx: 0, responses: [], submitted: false };
 
 /* ══════════════════════════════════
    UI HELPERS
 ══════════════════════════════════ */
 function showScreen(id) {
-  document.querySelectorAll('.screen').forEach(s => {
-    s.classList.remove('on');
-  });
-  const el = document.getElementById('screen-' + id);
-  el.classList.add('on');
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('on'));
+  document.getElementById('screen-' + id).classList.add('on');
   document.getElementById('site-header').classList.toggle('visible', id !== 'setup');
 }
 
@@ -633,7 +552,7 @@ function updateProgress() {
   ['pd0','pd1','pd2'].forEach((id, i) => {
     const d = document.getElementById(id);
     d.classList.remove('active','done');
-    if (i < S.idx)       d.classList.add('done');
+    if (i < S.idx) d.classList.add('done');
     else if (i === S.idx) d.classList.add('active');
   });
 }
@@ -646,8 +565,7 @@ function updateCC() {
 function toggleHint() {
   const box = document.getElementById('hint-box');
   const arr = document.getElementById('hint-arr');
-  const on = box.classList.toggle('on');
-  arr.textContent = on ? '▼' : '▶';
+  arr.textContent = box.classList.toggle('on') ? '▼' : '▶';
 }
 
 /* ══════════════════════════════════
@@ -673,15 +591,9 @@ function copyScript() {
 function startActivity() {
   const name = document.getElementById('inp-name').value.trim();
   const cls  = document.getElementById('inp-class').value.trim();
-
-  if (!name || !cls) {
-    alert('Please enter your name and class before starting.');
-    return;
-  }
-
+  if (!name || !cls) { alert('Please enter your name and class before starting.'); return; }
   S.name = name; S.cls = cls;
   S.idx = 0; S.responses = [];
-
   showScreen('activity');
   loadOutput(0);
 }
@@ -705,11 +617,11 @@ function loadOutput(i) {
   document.getElementById('char-row').textContent = '0 characters';
 
   const fc = document.getElementById('feedback-card');
-  fc.classList.remove('on','visible');
+  fc.className = 'feedback-card';
   document.getElementById('feedback-body').textContent = '';
 
   const sb = document.getElementById('submit-btn');
-  sb.disabled = false; sb.textContent = 'Submit Correction →';
+  sb.disabled = false; sb.textContent = 'Submit Correction →'; sb.style.display = '';
 
   document.getElementById('next-area').style.display = 'none';
 
@@ -717,33 +629,62 @@ function loadOutput(i) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-async function submitResponse() {
+function submitResponse() {
   const txt = document.getElementById('response-ta').value.trim();
-  if (txt.length < 60) {
-    alert('Please write a more complete response (aim for at least a paragraph).');
-    return;
-  }
+  if (txt.length < 60) { alert('Please write a more complete response (aim for at least a paragraph).'); return; }
   if (S.submitted) return;
 
   const ta = document.getElementById('response-ta');
   const sb = document.getElementById('submit-btn');
   ta.disabled = true;
   sb.disabled = true;
-  sb.innerHTML = '<span class="spinner"></span> Evaluating…';
+  sb.innerHTML = '<span class="spinner"></span> Checking…';
 
-  try {
-    const feedback = await evaluate(S.idx, txt);
+  // Small delay for UX feel, then evaluate synchronously
+  setTimeout(() => {
+    const result = evaluate(S.idx, txt);
 
-    document.getElementById('feedback-body').textContent = feedback;
+    // Render feedback
     const fc = document.getElementById('feedback-card');
-    fc.classList.add('on');
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => fc.classList.add('visible'));
+    fc.className = `feedback-card grade-${result.grade} on`;
+
+    document.getElementById('feedback-score').textContent =
+      `${result.score}/${result.total} concepts`;
+
+    const iconMap = { strong: '✓', partial: '◐', weak: '⚠' };
+    const titleMap = {
+      strong:  'STRONG CORRECTION — PATCH ACCEPTED',
+      partial: 'PARTIAL CORRECTION — NEEDS REFINEMENT',
+      weak:    'INCOMPLETE CORRECTION — MORE DETAIL NEEDED',
+    };
+    document.getElementById('feedback-icon').textContent  = iconMap[result.grade];
+    document.getElementById('feedback-title').textContent = titleMap[result.grade];
+
+    // Body text + concept chips
+    const bodyEl = document.getElementById('feedback-body');
+    const lines = result.body.split('\n');
+    let html = '';
+    lines.forEach(line => {
+      if (line.startsWith('•')) {
+        html += `<div style="margin-left:1rem;margin-top:0.3rem;">• ${line.slice(1).trim()}</div>`;
+      } else if (line.trim()) {
+        html += `<p style="margin-bottom:0.5rem;">${line.trim()}</p>`;
+      }
     });
 
-    S.responses.push({ r: txt, f: feedback });
-    S.submitted = true;
+    // Concept chips
+    html += '<div class="concept-chips">';
+    OUTPUTS[S.idx].concepts.forEach(c => {
+      const hit = result.hits.includes(c.label);
+      html += `<span class="chip ${hit ? 'chip-hit' : 'chip-miss'}">${hit ? '✓' : '✗'} ${c.label}</span>`;
+    });
+    html += '</div>';
+    bodyEl.innerHTML = html;
 
+    requestAnimationFrame(() => requestAnimationFrame(() => fc.classList.add('visible')));
+
+    S.responses.push({ r: txt, score: `${result.score}/${result.total}`, grade: result.grade });
+    S.submitted = true;
     sb.style.display = 'none';
 
     const nb = document.getElementById('next-btn');
@@ -751,89 +692,30 @@ async function submitResponse() {
       ? `Continue to Output ${S.idx + 2} →`
       : '🎓 Complete Debugging Session →';
     if (S.idx === 2) nb.style.background = 'var(--green)';
-
     document.getElementById('next-area').style.display = 'block';
     fc.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-
-  } catch (err) {
-    console.error(err);
-    sb.disabled = false;
-    sb.textContent = 'Submit Correction →';
-    ta.disabled = false;
-    alert('Could not reach the AI evaluator. Check your internet connection and try again.');
-  }
+  }, 600);
 }
 
 function nextOutput() {
-  if (S.idx < 2) {
-    S.idx++;
-    loadOutput(S.idx);
-  } else {
-    buildComplete();
-    showScreen('complete');
-  }
+  if (S.idx < 2) { S.idx++; loadOutput(S.idx); }
+  else { buildComplete(); showScreen('complete'); }
 }
 
 function buildComplete() {
   const grid = document.getElementById('summary-grid');
   grid.innerHTML = '';
   OUTPUTS.forEach((o, i) => {
-    const resp = S.responses[i]?.r || '—';
-    const preview = resp.length > 220 ? resp.slice(0, 220) + '…' : resp;
+    const r = S.responses[i];
+    const preview = r?.r?.length > 220 ? r.r.slice(0,220) + '…' : (r?.r || '—');
     const div = document.createElement('div');
     div.className = 'summary-item';
     div.innerHTML = `
-      <div class="summary-lbl">Output ${i+1} · ${o.code}</div>
+      <div class="summary-lbl">Output ${i+1} · ${o.code} · Score: ${r?.score || '—'}</div>
       <div class="summary-txt">${preview}</div>`;
     grid.appendChild(div);
   });
-
-  if (!SHEET_URL) {
-    document.getElementById('sheet-btn').style.display = 'none';
-  }
-}
-
-/* ══════════════════════════════════
-   ANTHROPIC API EVALUATION
-══════════════════════════════════ */
-async function evaluate(idx, studentText) {
-  const out = OUTPUTS[idx];
-
-  const res = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      model: 'claude-sonnet-4-20250514',
-      max_tokens: 450,
-      system: `You are an experienced IB SEHS (Sports, Exercise and Health Science) teacher evaluating student responses for the "Debugging FitBot-9000" classroom activity. Students must identify physiological flaws in a fake AI's incorrect outputs and provide scientifically rigorous corrections.
-
-Key IB SEHS syllabus content relevant to this activity:
-• Official definition of exercise: a subcategory of physical activity where planned, structured and repetitive bodily movements are performed to improve or maintain one or more components of physical fitness.
-• Physical activity can positively or negatively affect muscular and immune system function.
-• An active lifestyle reduces the risk of osteoporosis, obesity, hypertension, cardiovascular diseases, and Type 2 diabetes.
-
-Your evaluation must:
-• Acknowledge what the student correctly identified (be specific and encouraging)
-• Note any key IB SEHS concepts they missed or could have explained more precisely — especially if they missed the official definition or the specific disease-risk list
-• Confirm or gently correct the accuracy of their scientific explanation
-• Keep the whole response to 4–5 sentences maximum
-• Use appropriate IB SEHS terminology naturally`,
-      messages: [{
-        role: 'user',
-        content: `FitBot-9000's flawed output: "${out.text}"
-
-Key physiological concepts expected in a strong answer: ${out.eval}
-
-Student's response: "${studentText}"
-
-Evaluate this student's response.`
-      }]
-    })
-  });
-
-  const data = await res.json();
-  if (data.error) throw new Error(data.error.message);
-  return data.content[0].text;
+  if (!SHEET_URL) document.getElementById('sheet-btn').style.display = 'none';
 }
 
 /* ══════════════════════════════════
@@ -843,40 +725,27 @@ async function exportToSheets() {
   if (!SHEET_URL) return;
   const btn = document.getElementById('sheet-btn');
   const status = document.getElementById('export-status');
-  btn.disabled = true;
-  btn.textContent = 'Sending…';
+  btn.disabled = true; btn.textContent = 'Sending…';
 
   const payload = {
-    timestamp: new Date().toLocaleString(),
+    timestamp:   new Date().toLocaleString(),
     studentName: S.name,
-    className: S.cls,
-    r0: S.responses[0]?.r || '',
-    f0: S.responses[0]?.f || '',
-    r1: S.responses[1]?.r || '',
-    f1: S.responses[1]?.f || '',
-    r2: S.responses[2]?.r || '',
-    f2: S.responses[2]?.f || ''
+    className:   S.cls,
+    r0: S.responses[0]?.r || '', s0: S.responses[0]?.score || '',
+    r1: S.responses[1]?.r || '', s1: S.responses[1]?.score || '',
+    r2: S.responses[2]?.r || '', s2: S.responses[2]?.score || '',
   };
 
   try {
     const body = new URLSearchParams();
     body.append('data', JSON.stringify(payload));
-
-    await fetch(SHEET_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body
-    });
-
+    await fetch(SHEET_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body });
     status.textContent = '✓ Submitted! Check your Google Sheet for the new row.';
-    btn.textContent = '✓ Sent';
-    btn.style.background = '#047857';
+    btn.textContent = '✓ Sent'; btn.style.background = '#047857';
   } catch (err) {
     status.style.color = 'var(--red)';
-    status.textContent = 'Connection failed. Please download the text file and email it to your teacher.';
-    btn.disabled = false;
-    btn.textContent = '📊 Send to Google Sheets';
+    status.textContent = 'Connection failed. Please download the text file instead.';
+    btn.disabled = false; btn.textContent = '📊 Send to Google Sheets';
   }
 }
 
@@ -889,19 +758,12 @@ function downloadSummary() {
     `Date    : ${new Date().toLocaleString()}`,
     ''
   ];
-
   OUTPUTS.forEach((o, i) => {
+    const r = S.responses[i];
     lines.push('─'.repeat(52));
-    lines.push(`OUTPUT ${i+1}: ${o.code}`);
-    lines.push('');
-    lines.push('FITBOT-9000 SAID:');
-    lines.push(o.text);
-    lines.push('');
-    lines.push('STUDENT CORRECTION:');
-    lines.push(S.responses[i]?.r || '(no response)');
-    lines.push('');
-    lines.push('AI TEACHER FEEDBACK:');
-    lines.push(S.responses[i]?.f || '(no feedback)');
+    lines.push(`OUTPUT ${i+1}: ${o.code}  |  Score: ${r?.score || '—'}  |  Grade: ${r?.grade || '—'}`);
+    lines.push(''); lines.push('FITBOT-9000 SAID:'); lines.push(o.text);
+    lines.push(''); lines.push('STUDENT CORRECTION:'); lines.push(r?.r || '(no response)');
     lines.push('');
   });
 
